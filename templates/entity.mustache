@@ -1,0 +1,25 @@
+import { MaxLength, Property, Required } from "@tsed/common";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity("{{table}}")
+export class {{name}} {
+{{#fields}}
+    @Property()
+    {{#isPK}}
+    @PrimaryGeneratedColumn({ name: "{{COLUMN_NAME}}" })
+    {{/isPK}}
+    {{^isPK}}
+    @Column({ name: "{{COLUMN_NAME}}" })
+    {{/isPK}}
+    {{#isRequired}}
+    @Required()
+    {{/isRequired}}
+    {{#CHARACTER_MAXIMUM_LENGTH}}
+    @MaxLength({{CHARACTER_MAXIMUM_LENGTH}})
+    {{/CHARACTER_MAXIMUM_LENGTH}}
+    {{tsName}}: {{tsType}};
+{{^isLastField}}
+ 
+{{/isLastField}}
+{{/fields}}
+}
