@@ -1,0 +1,7 @@
+<ng-container *ngIf="dataSource">
+    <div>
+        <button mat-raised-button color="primary" [routerLink]="['edit']" queryParamsHandling="preserve" routerLinkActive="router-link-active" >Edit</button>
+    </div>
+
+    <div *ngFor="let item of dataSource">{{ item[0] }}: {{ item[1] }}</div>
+</ng-container>

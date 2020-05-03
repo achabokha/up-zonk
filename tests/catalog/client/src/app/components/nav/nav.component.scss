@@ -1,0 +1,70 @@
+$top: 35px;
+$bottom: 20px;
+
+.container {
+    position: absolute;
+    top: $top;
+    bottom: $bottom;
+    left: 0;
+    right: 0;
+}
+
+.sidenav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+
+    // background: rgba(255, 0, 0, 0.5);
+}
+
+.sidenav-header-container {
+    height: 60px;
+    border-bottom: 1px solid #aaa;
+}
+
+.sidenav-header {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: $top;
+}
+
+.greetingMsg {
+    font-size: 16px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: $bottom;
+}
+
+.content {
+    padding: 10px;
+}
+
+.icon {
+    padding: 0 14px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.sidenav-link-wrapper {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.ident-1 {
+    margin-left: 20px;
+}

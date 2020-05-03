@@ -1,0 +1,17 @@
+<ng-container *ngIf="dataSource">
+    <h1>Edit {{ dataSource[1][1] }}</h1>
+    <div *ngFor="let item of dataSource">
+        <mat-form-field appearance="fill">
+            <mat-label>{{ item[0] }}</mat-label>
+            <input matInput value="{{ item[1] }}" />
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-button>Cancel</button>
+        <button mat-raised-button color="primary">Update product</button>
+    </div>
+    <br />
+    <br />
+    <br />
+</ng-container>
+

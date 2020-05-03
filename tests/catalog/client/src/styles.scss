@@ -1,0 +1,68 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/theming";
+// @import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+// Angular Material Theming below
+
+// typography
+$custom-typography: mat-typography-config(
+    $font-family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+);
+
+// typography - sample with additional overwrites --   
+// $custom-typography: mat-typography-config(
+//     $font-family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+//     $headline: mat-typography-level(32px, 48px, 700),
+//     $body-1: mat-typography-level(16px, 24px, 500)
+// );
+
+$custom-typography: mat-typography-config(
+    $font-family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+);
+
+@include mat-core($custom-typography);
+
+// Custom style for my anchor elements for headers 
+// I don't want them to flicker or be highlighted -- 
+
+a.mat-h2 {
+    // color: black;
+    color: rgba($color: $dark-primary-text, $alpha: 0.6);
+    text-decoration: none;
+}
+
+a.mat-h2:hover {
+    // color: black;
+    color: rgba($color: $dark-primary-text, $alpha: 1.0);
+}
+
+a.mat-h3 {
+    // color: black;
+    color: rgba($color: $dark-primary-text, $alpha: 0.6);
+    text-decoration: none;
+}
+
+a.mat-h3:hover {
+    // color: black;
+    color: rgba($color: $dark-primary-text, $alpha: 1.0);
+}
+
+a.mat-h4 {
+    // color: black;
+    color: rgba($color: $dark-primary-text, $alpha: 0.6);
+    text-decoration: none;
+}
+
+a.mat-h4:hover {
+    // color: black;
+    color: rgba($color: $dark-primary-text, $alpha: 1.0);
+}

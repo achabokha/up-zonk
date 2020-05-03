@@ -1,0 +1,43 @@
+<mat-toolbar class="header" color="primary">
+    <span class="spacer"></span>
+    <div *ngIf="user && user.name && user.uuid" class="greetingMsg">Hello, {{ user.name }} ({{ user.uuid }})!</div>
+    <mat-icon class="icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+</mat-toolbar>
+<mat-sidenav-container class="container">
+    <mat-sidenav *ngIf="!sideClosed" #sidenav mode="side" opened class="sidenav">
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx" class="sidenav-header-container">
+            <div fxFlex fxLayoutAlign="center center">
+                <span class="sidenav-header">Dashboard</span>
+            </div>
+            <div fxFlex="40px" fxLayoutAlign="end center">
+                <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggleSidenav()">
+                    <mat-icon aria-label="Side nav toggle icon">close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div>
+            <div class="sidenav-link-wrapper">
+                <a class="mat-h3" [routerLink]="['/catalog']" routerLinkActive="router-link-active">Catalog</a>
+                <br />
+                <a class="mat-h4 ident-1" [routerLink]="['/catalog/products']" routerLinkActive="router-link-active"
+                    >Products</a
+                >
+            </div>
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav *ngIf="sideClosed" #sidenavClosed mode="side" opened class="sidenav-closed">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggleSidenav()">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+    </mat-sidenav>
+
+    <!-- app's content is not placed inside of a mat-sidenav-container element, you need to add the mat-app-background class 
+         to your wrapper element (for example the body). This ensures that the proper theme background is applied to your page. -->
+    <mat-sidenav-content class="content">
+        <app-breadcrumb></app-breadcrumb>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-toolbar class="footer" color="primary"></mat-toolbar>
