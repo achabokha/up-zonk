@@ -30,9 +30,16 @@ python3 ./src/genie.py ./models/product.json ./templates/entity.mustache ./out/e
 
 ## Development 
 
-Both python scripts and mustache 
+Recommended extensions for VS Code;
 
-> Using nodemon to watch *.ts and *.mustache files and restart python3
+https://github.com/Microsoft/vscode-python
+
+https://github.com/dnwhte/vscode-mustache-syntax-highlighting
+
+
+Install nodemon
+
+> Using nodemon to watch *.ts and *.mustache files and restart python3 if changes detected.
 
 Install nodejs
 
@@ -42,7 +49,12 @@ Install nodemon
 nmp install nodemon -g
 ```
 
-run a script
+Run nodemon
+
+```
+nodemon --exec "python3 " ./src/genie.py ./models/product.json ./templates/entity.mustache ./out/entities --ext py,mustache
+```
+or run a script
 
 ```
 zsh start.zsh
