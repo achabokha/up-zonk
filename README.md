@@ -51,7 +51,7 @@ Install nodejs
 Install nodemon 
 
 ```
-nmp install nodemon -g
+npm install nodemon -g
 ```
 
 Run nodemon
