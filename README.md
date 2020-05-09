@@ -113,7 +113,7 @@ http://localhost:8080/dashboard
 
 ```bash
 docker pull mysql
-docker run --name mysql1 -e MYSQL_ROOT_HOST=% -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
+docker run --name mysql1 -e MYSQL_ROOT_HOST=% -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d mysql:latest
 ```
 
 ### Prepare a Model
