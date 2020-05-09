@@ -5,10 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "Run template generator",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "./src/genie.py",
+            "args": ["./models/product.json", "./templates/entity.mustache", "./out/entities"],
             "console": "integratedTerminal"
         }
     ]
