@@ -1,8 +1,8 @@
 import argparse
 import json
 import re
-import os
-
+from os import listdir
+from os.path import isfile, join, basename, splitext
 
 def get_params():
 
@@ -12,15 +12,15 @@ def get_params():
     parser.add_argument("output", default='./output')
     args = parser.parse_args()
     modelFile = args.model
-    templateFile = args.template
+    templateFileDir = args.template
     outputFolder = args.output
 
-    filename_w_ext = os.path.basename(modelFile)
-    filename, file_extension = os.path.splitext(filename_w_ext)
+    filename_w_ext = basename(modelFile)
+    filename, file_extension = splitext(filename_w_ext)
+
+    templateFiles = [f for f in listdir(templateFileDir) if isfile(join(templateFileDir, f))]
 
     with open(modelFile) as f:
         model = json.load(f)
 
-    template = open(templateFile, "r").read()
-
-    return filename, model, template, outputFolder
+    return filename, model, templateFiles, outputFolder, templateFileDir

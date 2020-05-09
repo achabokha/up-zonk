@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "./src/genie.py",
-            "args": ["./models/product.json", "./templates/entity.mustache", "./out/entities"],
+            "args": ["./models/product.json", "./templates", "./tests/catalog/client/src/app"],
             "console": "integratedTerminal"
         }
     ]
