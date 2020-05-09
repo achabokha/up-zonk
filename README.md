@@ -85,15 +85,15 @@ open a terminal window
 Server
 ```zsh
 cd ./tests/catalog/server
-nmp install
-nmp start 
+npm install
+npm start 
 ```
 
 open another terminal window
 
 Client 
 ```
-cd /tests/catalog/client
+cd tests/catalog/client
 npm install
 npm start
 ```
@@ -102,10 +102,18 @@ Open browser
 
 http://localhost:8080/dashboard
 
+### Create MySQL server
+
+1. Get Docker up and running
+
+```bash
+docker pull mysql
+docker run --name mysql1 -e MYSQL_ROOT_HOST=% -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
+```
 
 ### Prepare a Model
 
-1. Execute in MySQLWorkbench 
+1. Execute in MySQLWorkbench
 
 ```sql
 select * from information_schema.columns where 
