@@ -27,6 +27,11 @@ pip install pystache
 pystache-test
 ```
 
+if you have pip pointing to python2 you can install it with 
+```
+pip3 install pystache
+```
+
 Run: 
 
 ```zsh
