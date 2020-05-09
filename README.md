@@ -26,7 +26,7 @@ Generate code from a JSON model to quickly stand up your Angular UI.
 
 Install Python3 (3.8)
 
-Add pystache module ([https://github.com/defunkt/pystache])
+Add pystache module (<https://github.com/defunkt/pystache>)
 
 ``` bash
 pip install pystache
@@ -49,9 +49,9 @@ python3 ./src/genie.py ./models/product.json ./templates/entity.mustache ./out/e
 
 Recommended extensions for VS Code;
 
-[https://github.com/Microsoft/vscode-python]
+<https://github.com/Microsoft/vscode-python>
 
-[https://github.com/dnwhte/vscode-mustache-syntax-highlighting]
+<https://github.com/dnwhte/vscode-mustache-syntax-highlighting>
 
 Install nodemon
 
@@ -79,7 +79,7 @@ zsh start.zsh
 
 ## Test App
 
-A test app is an Angular 9 + Angular Material 9 web app. It runs on a nodejs server. The server uses Ts.ED project ([https://tsed.io/]).
+A test app is an Angular 9 + Angular Material 9 web app. It runs on a nodejs server. The server uses Ts.ED project (<https://tsed.io/>).
 
 ./tests/catalog
 
@@ -114,7 +114,7 @@ npm start
 
 Open browser
 
-[http://localhost:8080/dashboard]
+<http://localhost:8080/dashboard>
 
 ### Create MySQL server
 
