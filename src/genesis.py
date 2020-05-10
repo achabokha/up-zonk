@@ -1,10 +1,9 @@
 
 import traceback
 import pystache
+import inflect
 import names
 from utils import load_json
-
-import inflect
 
 class Genesis:
     def __init__(self, name, model, templates, output_folder, template_dir):
@@ -19,6 +18,8 @@ class Genesis:
         for template_file in self.templates:
             print(f'Starting to render {template_file}')
             template = open(f'{self.template_dir}/{template_file}', "r").read()
+
+            #pp_json(self.model)
             try:
                 template_config = load_json(f'{self.template_dir}/{template_file}.json')
                 output = pystache.render(template, self.model)

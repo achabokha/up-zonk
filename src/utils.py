@@ -1,7 +1,8 @@
 import argparse
 import json
+
 from os import listdir
-from os.path import isfile, join, basename, splitext
+from os.path import join, basename, splitext
 
 def pp_json(json_thing, sort=True, indents=4):
     if isinstance(json_thing, str):
@@ -25,9 +26,9 @@ def get_params():
     filename_w_ext = basename(model_file)
     filename, file_extension = splitext(filename_w_ext)
 
-    template_files = [f for f in listdir(template_file_dir) if isfile(join(template_file_dir, f))]
+    template_files = [f for f in listdir(template_file_dir) if f.endswith(".mustache")]
 
-    with open(model_file) as f:
-        model = json.load(f)
+    with open(model_file) as file:
+        model = json.load(file)
 
     return filename, model, template_files, output_folder, template_file_dir

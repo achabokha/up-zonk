@@ -1,0 +1,4 @@
+{
+	"outDir": "components",
+	"outFileName": "{name}.component.html"
+}
