@@ -27,9 +27,10 @@ Generate code from a JSON model to quickly stand up your Angular UI.
 Install Python3 (3.8)
 
 Add pystache module (<https://github.com/defunkt/pystache>)
-
+Add inflect module
 ``` bash
 pip install pystache
+pip install inflect
 pystache-test
 ```
 
