@@ -1,7 +1,7 @@
 
 import pystache
 import names
-from utils import pp_json
+from utils import pp_json, load_json
 
 class Genesis:
     def __init__(self, name, model, templates, output_folder, template_dir):
@@ -15,13 +15,12 @@ class Genesis:
         for template_file in self.templates:
             print(f'Starting to render {template_file}')
             template = open(f'{self.template_dir}/{template_file}', "r").read()
-            pp_json(self.model)
+            template_config = load_json(f'{self.template_dir}/{template_file}.json')
             output = pystache.render(template, self.model)
 
-            file_name = template_file.replace('.mustache', '')
-            output_file_name = f'{self.output_folder}/{file_name}.ts'
-            
-
+            file_name = template_config["outFileName"].replace("{name}", self.name)
+            output_file_name = f'{self.output_folder}/{template_config["outDir"]}'
+            output_file_name = output_file_name + f'/{file_name}'
             with open(output_file_name, "w") as output_file:
                 output_file.write(output)
 

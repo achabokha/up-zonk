@@ -8,7 +8,9 @@ def pp_json(json_thing, sort=True, indents=4):
         print(json.dumps(json.loads(json_thing), sort_keys=sort, indent=indents))
     else:
         print(json.dumps(json_thing, sort_keys=sort, indent=indents))
-
+def load_json(file_name):
+    with open(file_name, "r") as template_config_file:
+        return json.load(template_config_file)
 def get_params():
 
     parser = argparse.ArgumentParser(description="Parameters")

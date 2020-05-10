@@ -1,0 +1,4 @@
+{
+	"outDir": "models",
+	"outFileName": "interface.{name}.ts"
+}

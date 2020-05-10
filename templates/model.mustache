@@ -1,0 +1,5 @@
+export interface {{name}}Component {
+	{{#fields}}
+		{{COLUMN_NAME}}{{^isRequired}}?{{/isRequired}}: {{tsType}};
+	{{/fields}}
+}
