@@ -1,8 +1,13 @@
 import argparse
 import json
-import re
 from os import listdir
 from os.path import isfile, join, basename, splitext
+
+def pp_json(json_thing, sort=True, indents=4):
+    if isinstance(json_thing, str):
+        print(json.dumps(json.loads(json_thing), sort_keys=sort, indent=indents))
+    else:
+        print(json.dumps(json_thing, sort_keys=sort, indent=indents))
 
 def get_params():
 
