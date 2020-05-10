@@ -18,16 +18,16 @@ def get_params():
     parser.add_argument("template")
     parser.add_argument("output", default='./output')
     args = parser.parse_args()
-    modelFile = args.model
-    templateFileDir = args.template
-    outputFolder = args.output
+    model_file = args.model
+    template_file_dir = args.template
+    output_folder = args.output
 
-    filename_w_ext = basename(modelFile)
+    filename_w_ext = basename(model_file)
     filename, file_extension = splitext(filename_w_ext)
 
-    templateFiles = [f for f in listdir(templateFileDir) if isfile(join(templateFileDir, f))]
+    template_files = [f for f in listdir(template_file_dir) if isfile(join(template_file_dir, f))]
 
-    with open(modelFile) as f:
+    with open(model_file) as f:
         model = json.load(f)
 
-    return filename, model, templateFiles, outputFolder, templateFileDir
+    return filename, model, template_files, output_folder, template_file_dir
