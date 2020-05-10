@@ -1,0 +1,72 @@
+// Available variables which can be used inside of strings.
+// ${workspaceRoot}: the root folder of the team
+// ${file}: the current opened file
+// ${fileBasename}: the current opened file's basename
+// ${fileDirname}: the current opened file's dirname
+// ${fileExtname}: the current opened file's extension
+// ${cwd}: the current working directory of the spawned process
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build",
+			"dependsOn": [
+				"start_client", "start_server"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "tests/catalog/client/",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "typescript",
+				"source": "ts",
+				"applyTo": "closedDocuments",
+				"fileLocation": [
+					"relative",
+					"${cwd}"
+				],
+				"pattern": "$tsc",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": {
+						"regexp": "(.*?)"
+					},
+					"endsPattern": {
+						"regexp": "Compiled |Failed to compile."
+					}
+				}
+			},
+			"label": "start_client"
+		},
+		{
+			"group": "build",
+			"label": "start_server",
+			"type": "npm",
+			"script": "start",
+			"path": "tests/catalog/server/",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "typescript",
+				"source": "ts",
+				"applyTo": "closedDocuments",
+				"fileLocation": [
+					"relative",
+					"${cwd}"
+				],
+				"pattern": "$tsc",
+				"background": {
+					"activeOnStart": false,
+					"beginsPattern": {
+						"regexp": "(.*?)"
+					},
+					"endsPattern": {
+						"regexp": "Listen server on http |Error:."
+					}
+				}
+			}
+		}
+	]
+}

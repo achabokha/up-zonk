@@ -2,7 +2,7 @@ import { ProductService } from "./../../../services/product.service";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { MatTableDataSource } from "@angular/material/table";
-import { Product } from "@models/product";
+import { Product } from "@models/product.interface";
 import { map } from "rxjs/operators";
 
 @Component({

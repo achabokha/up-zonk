@@ -1,3 +1,10 @@
+// Available variables which can be used inside of strings.
+// ${workspaceRoot}: the root folder of the team
+// ${file}: the current opened file
+// ${fileBasename}: the current opened file's basename
+// ${fileDirname}: the current opened file's dirname
+// ${fileExtname}: the current opened file's extension
+// ${cwd}: the current working directory of the spawned process
 {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
@@ -5,11 +12,44 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open Client",
+            "preLaunchTask": "Build" ,
+            "url": "http://localhost:8080/dashboard",
+            "webRoot": "${workspaceFolder}/tests/catalo g/client"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "start_client",
+            "name": "Start server",
+            "cwd": "${workspaceFolder}/tests/catalog/server",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script",
+                "start"
+            ],
+            "env": {
+                "db_password": "pass",
+                "db_user": "root"
+            },
+            "port": 8080,
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "node_modules/**"
+            ]
+        },
+        {
             "name": "Run template generator",
             "type": "python",
             "request": "launch",
             "program": "./src/genie.py",
-            "args": ["./models/product.json", "./templates", "./tests/catalog/client/src/app"],
+            "args": [
+                "./models/product.json",
+                "./templates",
+                "./tests/catalog"
+            ],
             "console": "integratedTerminal"
         }
     ]

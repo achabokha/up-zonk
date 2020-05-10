@@ -1,4 +1,4 @@
 {
-	"outDir": "services",
+	"outDir": "client/src/app/services",
 	"outFileName": "{name}.service.ts"
 }
