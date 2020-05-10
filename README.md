@@ -13,7 +13,7 @@ source {workspaceDir}.env/bin/activate
 Generate code from a JSON model to quickly stand up your Angular UI.
 
 - From MySQL
-  - TypeORM entities
+  - TypeORM entities <https://github.com/typeorm/typeorm>
   - (coming soon) Angular Material list, details, edit
   - (coming seen) TypeScrip model class
   - (coming seen) Angular service
