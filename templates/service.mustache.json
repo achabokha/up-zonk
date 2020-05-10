@@ -1,0 +1,4 @@
+{
+	"outDir": "services",
+	"outFileName": "{name}.service.ts"
+}

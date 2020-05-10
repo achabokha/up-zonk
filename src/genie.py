@@ -8,4 +8,4 @@ print("[DEBUG] Python version: ", sys.version)
 name, model, template, output_folder, template_dir = get_params()
 print(f'Model used {name}.js')
 
-Genesis(name, model, template[:1], output_folder, template_dir).create()
+Genesis(name, model, template[:2], output_folder, template_dir).create()

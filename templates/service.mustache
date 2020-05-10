@@ -1,0 +1,30 @@
+import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { {{name}} } from '@models/{{name}}';
+
+@Injectable({
+    providedIn: "root",
+})
+export class {{name}}Service {
+    constructor(private httpClient: HttpClient) {}
+
+    getAll(): {{name}}[] {
+        return this.httpClient.get(`rest/{{plural_name}}`);
+    }
+
+    create(item:{{name}}) {
+        return this.httpClient.post(`rest/{{plural_name}}`, item);
+    }
+
+    update(id, item: {{name}}) {
+        return this.httpClient.put(`rest/{{plural_name}}/${id}`, item);
+    }
+
+    read(id) {
+        return this.httpClient.get(`rest/{{plural_name}}/${id}`);
+    }
+
+    delete(id) {
+        return this.httpClient.delete(`rest/{{plural_name}}/${id}`);
+    }
+}
