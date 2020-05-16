@@ -1,13 +1,20 @@
 import sys
 import os
-from utils import get_params
+import json
+import utils
 from genesis import Genesis
 
+
 print("Welcome to Up-Zonk, a Code Generation!")
-print("[DEBUG] Python version: ", sys.version)
+# print("[DEBUG] Python version: ", sys.version)
 
-name, model, template, output_folder = get_params()
-print(name)
+config, model = utils.get_params()
+print("Config:")
+json.dump(config, sys.stdout, indent=4)
+print()
+print("Model: ")
+json.dump(model, sys.stdout, indent=4)
 
-Genesis(name, model, template, output_folder).create()
 
+
+# Genesis(name, model, template, output_folder).create()

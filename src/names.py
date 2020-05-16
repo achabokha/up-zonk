@@ -75,4 +75,4 @@ def quickTest():
     print("KebabToCamel: ", camelcase("kebab-to-camel"))
     print("KebabToPascal: ", pascalcase("kebab-to-pascal"))
 
-quickTest()
+# quickTest()
