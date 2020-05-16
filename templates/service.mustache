@@ -17,12 +17,12 @@ export class {{name}}Service {
         return this.httpClient.post('rest/{{plural_name}}', item);
     }
 
-    update(id, item: {{name}}) {
-        return this.httpClient.put('rest/{{plural_name}}/${id}', item);
-    }
-
     read(id): Observable<{{name}}>  {
         return this.httpClient.get<{{name}}>('rest/{{plural_name}}/${id}');
+    }
+
+    update(id, item: {{name}}) {
+        return this.httpClient.put('rest/{{plural_name}}/${id}', item);
     }
 
     delete(id) {

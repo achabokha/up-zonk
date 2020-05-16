@@ -1,23 +1,32 @@
 name: "product"
+
 models:
     originalModel: "product.json"
     enhancedModel: "product.yaml"
+
 templates:
     components:
         - action
         - list
         - details
         - edit
-    componentsOutput: client/src/app/modules/catalog/
-    
-    classes:
-        - name: entity 
-          outputFolder: server/entities"
-        - name: model 
-          outputFolder: client/src/app/models
-        - name: service 
-          outputFolder: client/src/app/models
+    componentsOutDir: client/src/app/modules/catalog/
 
-    exclude: 
-        - list 
-        - entity
+    files:
+        - name: entity
+          outDir: server/entities"
+
+        - name: model
+          outDir: client/src/app/models
+          outFileName: "{name}.interface.ts"
+
+        - name: service
+          outDir: client/src/app/models
+
+    exclude:
+        components:
+            - list
+            - entity
+        classes: 
+            
+            

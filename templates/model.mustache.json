@@ -1,4 +1,0 @@
-{
-	"outDir": "client/src/app/models",
-	"outFileName": "{name}.interface.ts"
-}
