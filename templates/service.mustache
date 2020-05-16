@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { {{name}} } from '@models/{{table}}.interface';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class {{name}}Service {
+    constructor(private httpClient: HttpClient) {}
+
+    getAll(): Observable<{{name}}[]> {
+        return this.httpClient.get<{{name}}[]>('rest/{{plural_name}}');
+    }
+
+    create(item: {{name}}) {
+        return this.httpClient.post('rest/{{plural_name}}', item);
+    }
+
+    update(id, item: {{name}}) {
+        return this.httpClient.put('rest/{{plural_name}}/${id}', item);
+    }
+
+    read(id): Observable<{{name}}>  {
+        return this.httpClient.get<{{name}}>('rest/{{plural_name}}/${id}');
+    }
+
+    delete(id) {
+        return this.httpClient.delete('rest/{{plural_name}}/${id}');
+    }
+}

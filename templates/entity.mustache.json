@@ -1,0 +1,4 @@
+{
+	"outDir": "server/src/entities",
+	"outFileName": "{name}.ts"
+}

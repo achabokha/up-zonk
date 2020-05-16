@@ -1,5 +1,10 @@
 {
     "cSpell.words": [
-        "sidenav"
-    ]
+        "sidenav",
+        "venv"
+    ],
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": ["--disable=C0114", "--disable=C0115", "--disable=C0116"]
 }
