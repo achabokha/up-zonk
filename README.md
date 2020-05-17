@@ -13,10 +13,9 @@ For MySQL JSON table models:
 -   Angular service
 -   Place holders for action, list, details, edit Angular components
 
-Coming:
+Next:
 
--   Angular Material list, details, edit/create
--   support for excludes
+-   Angular Material list, details, edit/create templates
 -   support for enhanced models
 -   bug fixes for current templates
 -   extending testing
@@ -24,6 +23,7 @@ Coming:
 Known issues:
 
 -   sometimes throws exception if base out folder does not exists, but finishes correctly.
+-   excludes must be specified, not optional, geez.
 
 ## Zonk
 
