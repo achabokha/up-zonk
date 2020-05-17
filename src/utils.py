@@ -1,6 +1,7 @@
 import argparse
-import yaml
 import json
+import yaml
+import os
 from os.path import join, basename, splitext
 
 
@@ -12,28 +13,29 @@ def pp_json(json_thing, sort=True, indents=4):
 
 
 def load_json(file_name):
-    with open(file_name, "r") as template_config_file:
-        return json.load(template_config_file)
+    with open(file_name, "r") as file_stream:
+        return json.load(file_stream)
 
+def load_yaml(file_name):
+    with open(file_name, "r") as file_stream:
+        return yaml.load(file_stream, Loader=yaml.FullLoader)
 
 def get_params():
 
     parser = argparse.ArgumentParser(description="Parameters")
-    parser.add_argument("model")
+    parser.add_argument("meta_model")
     parser.add_argument("--config",  default='./up-zonk.yaml', required=False)
     args = parser.parse_args()
 
-    filename_w_ext = os.path.basename(args.model)
+    config = load_yaml(args.config)
+
+    # meta model load, can be without .yaml ext --
+    filename_w_ext = os.path.basename(args.meta_model)
     filename, file_extension = os.path.splitext(filename_w_ext)
 
-    model_file_name = args.model if file_extension == "yaml" else filename + ".yaml"
-    print(model_file_name)
+    meta_model_file_name = args.model if file_extension == "yaml" else filename + ".yaml"
 
-    with open(args.config) as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
+    meta_model_path = os.path.join(config["up"], meta_model_file_name)
+    meta_model = load_yaml(meta_model_path)
 
-    model_path = os.path.join(config["up"], model_file_name)
-    with open(model_path) as f:
-        model = yaml.load(f, Loader=yaml.FullLoader)
-
-    return config, model
+    return config, meta_model

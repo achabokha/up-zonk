@@ -5,23 +5,23 @@ models:
     enhancedModel: "product.yaml"
 
 templates:
-    components:
+    ngComponents:
         - action
         - list
         - details
         - edit
-    componentsOutDir: client/src/app/modules/catalog/
+    ngComponentsOutDir: client/src/app/modules/catalog/
 
     files:
         - name: entity
-          outDir: server/entities"
+          outDir: server/entities
 
         - name: model
           outDir: client/src/app/models
           outFileName: "{name}.interface.ts"
 
         - name: service
-          outDir: client/src/app/models
+          outDir: client/src/app/services
 
     exclude:
         components:

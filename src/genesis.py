@@ -3,36 +3,67 @@ import traceback
 import pystache
 import inflect
 import names
-from utils import load_json
+import os.path
+from os import path
+import utils
+import shutil
+
 
 class Genesis:
-    def __init__(self, name, model, templates, output_folder, template_dir):
-        self.name = name
+    def __init__(self, config, meta_model):
+        self.name = meta_model['name']
+        self.meta_model = meta_model
+        self.base_out_dir = config['zonk']
+        self.base_models_dir = config['up']
+        self.base_templates_dir = config['templates']
         self.inflect = inflect.engine()
-        self.model = self.__parse_model(model)
-        self.templates = templates
-        self.output_folder = output_folder
-        self.template_dir = template_dir
+
+        model_filepath = path.join(
+            self.base_models_dir, 'original', self.name + '.json')
+        self.model = self.__parse_model(utils.load_json(model_filepath))
+
+        # for debbugging --
+        # if(path.exists(self.base_out_dir)):
+        #     shutil.rmtree(self.base_out_dir,  ignore_errors=True)
 
     def create(self):
-        for template_file in self.templates:
-            print(f'Starting to render {template_file}')
-            template = open(f'{self.template_dir}/{template_file}', "r").read()
 
-            #pp_json(self.model)
-            try:
-                template_config = load_json(f'{self.template_dir}/{template_file}.json')
-                output = pystache.render(template, self.model)
-            except FileNotFoundError:
-                print('Could not load template config')
-                traceback.print_exc()
-                continue
+        self.__build_files()
 
-            file_name = template_config["outFileName"].replace("{name}", self.name)
-            output_file_name = f'{self.output_folder}/{template_config["outDir"]}'
-            output_file_name = output_file_name + f'/{file_name}'
-            with open(output_file_name, "w") as output_file:
-                output_file.write(output)
+        # self.__build_ng_components()
+
+    # def __build_ng_componets(self):
+
+    def __build_files(self):
+        files = self.meta_model['templates']['files']
+        # TODO: makes excludes work --
+        # excludes = self.meta_model['templates']['exclude'] if 'exclude' in self.meta_model['templates'] else "dah"
+
+        for file in files:
+            filename = file['name']
+            template_filename = filename + '.mustache'
+            template_filepath = path.join(
+                self.base_templates_dir, template_filename)
+            out_filename = filename + '.ts'
+
+            if "outFileName" in file:
+                out_filename = file["outFileName"].replace("{name}", self.name)
+
+            out_dir = path.join(self.base_out_dir, file['outDir'])
+
+            self.__build_template(template_filepath, out_dir, out_filename)
+
+    def __build_template(self, template_filepath, out_dir, out_filename):
+        template = open(template_filepath, "r").read()
+        out = pystache.render(template, self.model)
+
+        if not path.exists(out_dir):
+            os.makedirs(out_dir)
+
+        out_filepath = path.join(out_dir, out_filename)
+        with open(out_filepath, "w") as out_file:
+            out_file.write(out)
+            print(out_filepath)
 
     def __parse_model(self, model):
         model_fields = len(model)
