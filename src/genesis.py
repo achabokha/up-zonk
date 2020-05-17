@@ -23,8 +23,8 @@ class Genesis:
         self.model = self.__parse_model(utils.load_json(model_filepath))
 
         # for debbugging --
-        if(path.exists(self.base_out_dir)):
-            shutil.rmtree(self.base_out_dir,  ignore_errors=True)
+        # if(path.exists(self.base_out_dir)):
+        #     shutil.rmtree(self.base_out_dir,  ignore_errors=True)
 
     def create(self):
 
@@ -40,8 +40,7 @@ class Genesis:
         for file in files:
             filename = file['name']
             template_filename = filename + '.mustache'
-            template_filepath = path.join(
-                self.base_templates_dir, template_filename)
+            template_filepath = path.join(self.base_templates_dir, template_filename)
             out_filename = filename + '.ts'
 
             if "outFileName" in file:

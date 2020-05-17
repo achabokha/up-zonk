@@ -1,9 +1,5 @@
 name: "product"
 
-models:
-    originalModel: "product.json"
-    enhancedModel: "product.yaml"
-
 templates:
     ngComponents:
         - action
@@ -18,6 +14,7 @@ templates:
 
         - name: model
           outDir: client/src/app/models
+          # (optional) filename mask
           outFileName: "{name}.interface.ts"
 
         - name: service
