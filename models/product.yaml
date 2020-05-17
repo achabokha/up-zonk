@@ -24,9 +24,9 @@ templates:
           outDir: client/src/app/services
 
     exclude:
-        components:
+        ngComponents:
             - list
             - entity
-        classes: 
+        files: 
             
             
