@@ -1,3 +1,9 @@
+# where to look for models
+# original model is in /original folder 
 up: ./models
+
+# where to look for templates 
 templates: ./templates
+
+# output base folder 
 zonk: ./out
