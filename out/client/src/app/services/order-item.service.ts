@@ -6,26 +6,26 @@ import { OrderItem } from '@models/order-item.interface';
 @Injectable({
     providedIn: 'root',
 })
-export class OrderItemService {
+export class OrderItemsService {
     constructor(private httpClient: HttpClient) {}
 
     getAll(): Observable<OrderItem[]> {
-        return this.httpClient.get<OrderItem[]>('rest/order_items');
+        return this.httpClient.get<OrderItem[]>('rest/order-items');
     }
 
     create(item: OrderItem) {
-        return this.httpClient.post('rest/order_items', item);
+        return this.httpClient.post('rest/order-items', item);
     }
 
     read(id): Observable<OrderItem>  {
-        return this.httpClient.get<OrderItem>('rest/order_items/${id}');
+        return this.httpClient.get<OrderItem>('rest/order-items/${id}');
     }
 
     update(id, item: OrderItem) {
-        return this.httpClient.put('rest/order_items/${id}', item);
+        return this.httpClient.put('rest/order-items/${id}', item);
     }
 
     delete(id) {
-        return this.httpClient.delete('rest/order_items/${id}');
+        return this.httpClient.delete('rest/order-items/${id}');
     }
 }

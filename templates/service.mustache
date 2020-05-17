@@ -6,7 +6,7 @@ import { {{pascalName}} } from '@models/{{kebabName}}.interface';
 @Injectable({
     providedIn: 'root',
 })
-export class {{pascalName}}Service {
+export class {{pascalNamePlural}}Service {
     constructor(private httpClient: HttpClient) {}
 
     getAll(): Observable<{{pascalName}}[]> {

@@ -1,7 +1,7 @@
 
 import traceback
 import pystache
-import inflect
+
 import names
 import os.path
 from os import path
@@ -16,7 +16,6 @@ class Genesis:
         self.base_out_dir = config['zonk']
         self.base_models_dir = config['up']
         self.base_templates_dir = config['templates']
-        self.inflect = inflect.engine()
 
         model_filepath = path.join(
             self.base_models_dir, 'original', self.name + '.json')
@@ -48,7 +47,13 @@ class Genesis:
             template_filename = filename + '.mustache'
             template_filepath = path.join(
                 self.base_templates_dir, template_filename)
-            out_filename = filename + '.ts'
+            
+            out_filename = self.name
+            if "outFileNamePlural" in file:
+                if file["outFileNamePlural"]:
+                    out_filename = names.plural(out_filename)
+    
+            out_filename = out_filename + '.' + filename + '.ts'
 
             if "outFileName" in file:
                 out_filename = file["outFileName"].replace(
@@ -122,9 +127,10 @@ class Genesis:
         new_model = {
             "name": self.name,
             "kebabName": self.name,
+            "pluralName": names.plural(self.name),
             "pascalName": names.pascalcase(self.name),
+            "pascalNamePlural": names.pascalcase(names.plural(self.name)),
             "camelName": names.camelcase(self.name),
-            "pluralName": self.inflect.plural(model[0]['TABLE_NAME']),
             "table": model[0]['TABLE_NAME'],
             "fields": model
         }

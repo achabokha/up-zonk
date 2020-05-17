@@ -19,6 +19,7 @@ templates:
 
         - name: service
           outDir: client/src/app/services
+          outFileNamePlural: true
 
     exclude:
         ngComponents:
