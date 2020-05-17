@@ -1,0 +1,35 @@
+name: "order-item"
+
+templates:
+    ngComponents:
+        - action
+        - list
+        - details
+        - edit
+    ngComponentsOutDir: client/src/app/modules/catalog/
+
+    files:
+        - name: entity
+          outDir: server/entities
+
+        - name: model
+          outDir: client/src/app/models
+          # (optional) filename mask
+          outFileName: "{name}.interface.ts"
+
+        - name: service
+          outDir: client/src/app/services
+
+    exclude:
+        ngComponents:
+            - list
+            - details
+            - edit
+        files:
+            - entity
+            - model
+
+            
+
+            
+            
