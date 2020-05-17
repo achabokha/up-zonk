@@ -21,6 +21,9 @@ Coming:
 -   bug fixes for current templates
 -   extending testing
 
+Known issues:
+-   sometimes throws exception if base out folder does not exists, but finishes correctly. 
+
 ## Zonk
 
 ... zzz ...
