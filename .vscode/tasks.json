@@ -48,6 +48,12 @@
 			"script": "start",
 			"path": "tests/catalog/server/",
 			"isBackground": true,
+			"options": {
+				"env": {
+					"db_password": "pass",
+					"db_user": "root"
+				},
+			},
 			"problemMatcher": {
 				"owner": "typescript",
 				"source": "ts",

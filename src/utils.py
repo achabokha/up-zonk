@@ -24,7 +24,7 @@ def get_params():
 
     parser = argparse.ArgumentParser(description="Parameters")
     parser.add_argument("meta_model")
-    parser.add_argument("--config",  default='./up-zonk.yaml', required=False)
+    parser.add_argument("--config", default='./up-zonk.yaml', required=False)
     args = parser.parse_args()
 
     config = load_yaml(args.config)

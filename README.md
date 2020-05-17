@@ -34,6 +34,7 @@ Add inflect module
 ``` bash
 pip install pystache
 pip install inflect
+pip install pyyaml
 pystache-test
 ```
 
@@ -42,6 +43,7 @@ if you have pip pointing to python2 you can install it with
 ``` bash
 pip3 install pystache
 pip3 install inflect
+pip3 install pyyaml
 ```
 
 Run:
