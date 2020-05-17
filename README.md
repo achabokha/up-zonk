@@ -10,19 +10,20 @@ For MySQL JSON table models:
 
 -   TypeORM entities <https://github.com/typeorm/typeorm> for ts.ed framework (https://tsed.io/)
 -   TypeScrip interface
--   Angular service 
+-   Angular service
 -   Place holders for action, list, details, edit Angular components
 
-Coming: 
+Coming:
 
 -   Angular Material list, details, edit/create
--   support for excludes 
+-   support for excludes
 -   support for enhanced models
 -   bug fixes for current templates
 -   extending testing
 
 Known issues:
--   sometimes throws exception if base out folder does not exists, but finishes correctly. 
+
+-   sometimes throws exception if base out folder does not exists, but finishes correctly.
 
 ## Zonk
 
@@ -52,15 +53,15 @@ pystache-test
 python3 ./src/genie.py product
 ```
 
-## Configuration 
+## Configuration
 
-Main configuration file to locate meta-model, specify templates base folder and output base folder. 
+Main configuration file to locate meta-model, specify templates base folder and output base folder.
 
-up-zonk.yaml 
+up-zonk.yaml
 
 A sample meta-model configuration:
 
-.models/product.yaml 
+.models/product.yaml
 
 A sample original MySQL models:
 
@@ -70,7 +71,6 @@ A sample of enhanced model (coming soon):
 
 models/enhanced/product.json
 
-
 ## Development
 
 Recommended extensions for VS Code;
@@ -79,13 +79,13 @@ Recommended extensions for VS Code;
 
 <https://github.com/dnwhte/vscode-mustache-syntax-highlighting>
 
-<https://github.com/MicrosoftDocs/intellicode> 
-> make sure you have Python3 correctly configured on Mac, see the docs.
+<https://github.com/MicrosoftDocs/intellicode>
 
+> make sure you have Python3 correctly configured on Mac, see the docs.
 
 ### Install nodemon
 
-> Using nodemon to watch \*.ts and \*.mustache files and restart python3 if changes detected.
+> Using nodemon to watch _.ts, _.mustache, _.yaml and _.json files and restart python3 if changes detected. Speeds up development.
 
 Install nodejs
 
