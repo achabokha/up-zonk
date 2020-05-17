@@ -47,12 +47,12 @@ class Genesis:
             template_filename = filename + '.mustache'
             template_filepath = path.join(
                 self.base_templates_dir, template_filename)
-            
+
             out_filename = self.name
             if "outFileNamePlural" in file:
                 if file["outFileNamePlural"]:
                     out_filename = names.plural(out_filename)
-    
+
             out_filename = out_filename + '.' + filename + '.ts'
 
             if "outFileName" in file:
@@ -89,15 +89,12 @@ class Genesis:
             out_dir = path.join(
                 self.base_out_dir, components_out_dir, component_name)
 
-            bak_name = self.model['name']
-            self.model['name'] = names.pascalcase(component_name)
             self.__build_template(html_template_filepath,
                                   out_dir, html_out_filepath)
             self.__build_template(scss_template_filepath,
                                   out_dir, scss_out_filepath)
             self.__build_template(ts_template_filepath,
                                   out_dir, ts_out_filepath)
-            self.model['name'] = bak_name
 
     def __build_template(self, template_filepath, out_dir, out_filename):
 
