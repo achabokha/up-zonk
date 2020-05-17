@@ -49,6 +49,8 @@ pystache-test
 
 ## Run Generator
 
+Example: 
+
 ```zsh
 python3 ./src/genie.py product
 ```
@@ -98,7 +100,7 @@ npm install nodemon -g
 Run nodemon
 
 ```bash
-nodemon --exec "python3 " ./src/genie.py product. --ext py,mustache,yaml,json
+nodemon --exec "python3 ./src/genie.py product" --ext py,mustache,yaml,json
 ```
 
 or run a script
