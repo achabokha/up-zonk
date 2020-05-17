@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { {{name}} } from '@models/{{table}}.interface';
+import { {{pascalName}} } from '@models/{{kebabName}}.interface';
 
 @Injectable({
     providedIn: 'root',
 })
-export class {{name}}Service {
+export class {{pascalName}}Service {
     constructor(private httpClient: HttpClient) {}
 
-    getAll(): Observable<{{name}}[]> {
-        return this.httpClient.get<{{name}}[]>('rest/{{plural_name}}');
+    getAll(): Observable<{{pascalName}}[]> {
+        return this.httpClient.get<{{pascalName}}[]>('rest/{{pluralName}}');
     }
 
-    create(item: {{name}}) {
-        return this.httpClient.post('rest/{{plural_name}}', item);
+    create(item: {{pascalName}}) {
+        return this.httpClient.post('rest/{{pluralName}}', item);
     }
 
-    read(id): Observable<{{name}}>  {
-        return this.httpClient.get<{{name}}>('rest/{{plural_name}}/${id}');
+    read(id): Observable<{{pascalName}}>  {
+        return this.httpClient.get<{{pascalName}}>('rest/{{pluralName}}/${id}');
     }
 
-    update(id, item: {{name}}) {
-        return this.httpClient.put('rest/{{plural_name}}/${id}', item);
+    update(id, item: {{pascalName}}) {
+        return this.httpClient.put('rest/{{pluralName}}/${id}', item);
     }
 
     delete(id) {
-        return this.httpClient.delete('rest/{{plural_name}}/${id}');
+        return this.httpClient.delete('rest/{{pluralName}}/${id}');
     }
 }

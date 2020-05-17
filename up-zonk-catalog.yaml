@@ -6,4 +6,4 @@ up: ./models
 templates: ./templates
 
 # output base folder 
-zonk: ./out
+zonk: ./tests/catalog
