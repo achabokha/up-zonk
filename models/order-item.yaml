@@ -23,7 +23,6 @@ templates:
 
     exclude:
         ngComponents:
-            - list
             - details
             - edit
         files:

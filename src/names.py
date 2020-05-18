@@ -69,6 +69,9 @@ def pascalcase(string):
 
     return capitalcase(camelcase(string))
 
+def spacecase(string):
+    return string.replace('-', ' ').replace('_', ' ')
+
 def plural(string):
     return inflect_engine.plural(string)
 

@@ -124,10 +124,13 @@ class Genesis:
         new_model = {
             "name": self.name,
             "kebabName": self.name,
-            "pluralName": names.plural(self.name),
+            "kebabNamePlural": names.plural(self.name),
             "pascalName": names.pascalcase(self.name),
             "pascalNamePlural": names.pascalcase(names.plural(self.name)),
             "camelName": names.camelcase(self.name),
+            "camelNamePlural": names.camelcase(names.plural(self.name)),
+            "capitalName": names.capitalcase(names.spacecase(self.name)),
+            "spaceName": names.spacecase(self.name),
             "table": model[0]['TABLE_NAME'],
             "fields": model
         }

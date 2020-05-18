@@ -1,1 +1,95 @@
-{{name}}Component
+<app-list-header>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="0px">
+        <div fxFlex="none" class="mat-h1 title">{{capitalName}}</div>
+        <div fxFlex="auto"></div>
+        <div fxFlex="nogrow">
+            <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px" class="button-row">
+                <button mat-flat-button (click)="refresh()"><mat-icon>refresh</mat-icon></button>
+                <button mat-flat-button [disabled]="!selectedItem">Start</button>
+                <button
+                    mat-flat-button
+                    [disabled]="!selectedItem"
+                    [routerLink]="[selectedItem?.name]"
+                    [queryParams]="{ id: selectedItem?.id }"
+                >
+                    View details
+                </button>
+                <button
+                    mat-flat-button
+                    [disabled]="!selectedItem"
+                    [routerLink]="[selectedItem?.name, 'edit', 'configuration']"
+                    [queryParams]="{ id: selectedItem?.id }"
+                >
+                    Edit
+                </button>
+                <button
+                    mat-flat-button
+                    [disabled]="!selectedItem"
+                    onclick="this.blur()"
+                    (click)="delete(selectedItem?.id)"
+                >
+                    Delete {{spaceName}}
+                </button>
+                <button mat-flat-button color="accent" [routerLink]="['create']" [queryParams]="{ id: -1 }">
+                    Create {{spaceName}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="55">
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <div fxFlex="none" xFlexAlign="center">
+                    <mat-icon class="search-icon">search</mat-icon>
+                </div>
+                <div fxFlex="auto">
+                    <mat-form-field class="filter" shouldLabelFloat="false">
+                        <input matInput (keyup)="applyFilter($event)" placeholder="" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div fxFlex="auto">
+            <div class="pagination">
+                <mat-paginator hidePageSize></mat-paginator>
+                <button mat-icon-button><mat-icon>settings outline</mat-icon></button>
+            </div>
+        </div>
+    </div>
+</app-list-header>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z2" matSort>
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let item">
+            <mat-radio-button (click)="selectItem(item)"></mat-radio-button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let item">
+            <a [routerLink]="[item.name]" [queryParams]="{ id: item.id }" routerLinkActive="router-link-active">{{
+                item.name
+            }}</a>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+        <td mat-cell *matCellDef="let item">{{ item.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="desc">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let item">{{ item.desc }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [ngClass]="{ 'selected-row': row == selectedItem }"
+    ></tr>
+</table>

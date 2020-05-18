@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { {{pascalName}} } from '@models/{{kebabName}}.interface';
+
+import { ShowLoader } from '@decorators/show-loader';
+import { ShowStatus } from '@decorators/show-status';
+
+import { {{pascalName}} } from '@models/{{kebabName}}.model';
 
 @Injectable({
     providedIn: 'root',
@@ -9,23 +13,26 @@ import { {{pascalName}} } from '@models/{{kebabName}}.interface';
 export class {{pascalNamePlural}}Service {
     constructor(private httpClient: HttpClient) {}
 
+    @ShowLoader()
     getAll(): Observable<{{pascalName}}[]> {
-        return this.httpClient.get<{{pascalName}}[]>('rest/{{pluralName}}');
+        return this.httpClient.get<{{pascalName}}[]>('rest/{{kebabNamePlural}}');
     }
 
+    @ShowStatus()
     create(item: {{pascalName}}) {
-        return this.httpClient.post('rest/{{pluralName}}', item);
+        return this.httpClient.post('rest/{{kebabNamePlural}}', item);
     }
 
     read(id): Observable<{{pascalName}}>  {
-        return this.httpClient.get<{{pascalName}}>('rest/{{pluralName}}/${id}');
+        return this.httpClient.get<{{pascalName}}>('rest/{{kebabNamePlural}}/${id}');
     }
 
+    @ShowStatus()
     update(id, item: {{pascalName}}) {
-        return this.httpClient.put('rest/{{pluralName}}/${id}', item);
+        return this.httpClient.put('rest/{{kebabNamePlural}}/${id}', item);
     }
 
     delete(id) {
-        return this.httpClient.delete('rest/{{pluralName}}/${id}');
+        return this.httpClient.delete('rest/{{kebabNamePlural}}/${id}');
     }
 }
