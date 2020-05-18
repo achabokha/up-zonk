@@ -115,10 +115,16 @@ class Genesis:
         model_fields = len(model)
 
         for i, item in enumerate(model):
-            item["tsName"] = names.camelcase(item["COLUMN_NAME"])
+            field_name = item["COLUMN_NAME"]
+            item["tsName"] = names.camelcase(field_name)
+            item["camelName"] = names.camelcase(field_name)
+            item["capitalName"] = names.capitalcase(names.spacecase(field_name))
+            item["itemTemplateExpr"] = "{{ item." + names.camelcase(field_name) + "}}"
+            
             item['tsType'] = self.__mysql_to_ts_type(item["DATA_TYPE"])
             item['isPK'] = item['COLUMN_KEY'] == 'PRI'
             item['isRequired'] = item['IS_NULLABLE'] == 'NO'
+            item['isFirstField'] = i == 0
             item['isLastField'] = (model_fields-1) == i
 
         new_model = {
@@ -131,6 +137,7 @@ class Genesis:
             "camelNamePlural": names.camelcase(names.plural(self.name)),
             "capitalName": names.capitalcase(names.spacecase(self.name)),
             "spaceName": names.spacecase(self.name),
+
             "table": model[0]['TABLE_NAME'],
             "fields": model
         }
