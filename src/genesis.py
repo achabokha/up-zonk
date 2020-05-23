@@ -33,11 +33,7 @@ class Genesis:
 
     def __build_files(self):
         files = self.meta_model['templates']['files']
-        # TODO: make excludes section optional, make files optional --
         excludes = self.meta_model['templates']['exclude']['files']
-
-        # TODO: makes excludes work --
-        # excludes = self.meta_model['templates']['exclude'] if 'exclude' in self.meta_model['templates'] else "dah"
 
         for file in files:
             filename = file['name']
@@ -67,7 +63,6 @@ class Genesis:
         ng_components = self.meta_model['templates']['ngComponents']
         components_out_dir = self.meta_model['templates']['ngComponentsOutDir']
 
-        # TODO: make excludes section optional, make ngComponents optional --
         excludes = self.meta_model['templates']['exclude']['ngComponents']
 
         for component in ng_components:
@@ -118,12 +113,19 @@ class Genesis:
             field_name = item["COLUMN_NAME"]
             item["tsName"] = names.camelcase(field_name)
             item["camelName"] = names.camelcase(field_name)
-            item["capitalName"] = names.capitalcase(names.spacecase(field_name))
-            item["itemTemplateExpr"] = "{{ item." + names.camelcase(field_name) + "}}"
-            
+            item["capitalName"] = names.capitalcase(
+                names.spacecase(field_name))
+            item["itemTemplateExpr"] = "{{ item." + \
+                names.camelcase(field_name) + "}}"
+
             item['tsType'] = self.__mysql_to_ts_type(item["DATA_TYPE"])
             item['isPK'] = item['COLUMN_KEY'] == 'PRI'
             item['isRequired'] = item['IS_NULLABLE'] == 'NO'
+            item['controlType'] = self.__mysql_to_control_type(
+                item['CHARACTER_MAXIMUM_LENGTH'])
+            item['inputType'] = item['tsType']
+            item['maxLength'] = item["CHARACTER_MAXIMUM_LENGTH"]
+
             item['isFirstField'] = i == 0
             item['isLastField'] = (model_fields-1) == i
 
@@ -155,3 +157,10 @@ class Genesis:
             "bit": "boolean"
         }
         return map_types[field_type]
+
+    def __mysql_to_control_type(self, max_length):
+        if max_length is None:
+            return 'input'
+
+        return 'input' if max_length < 121 else 'textbox'
+
