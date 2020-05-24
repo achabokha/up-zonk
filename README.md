@@ -33,6 +33,7 @@ Known issues:
 
 python3 -m venv {workspaceDir}/.env
 source {workspaceDir}.env/bin/activate
+pip install -r requirements.txt
 
 ## Installation
 
