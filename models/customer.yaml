@@ -10,7 +10,7 @@ templates:
 
     files:
         - name: entity
-          outDir: server/entities
+          outDir: server/src/entities
 
         - name: model
           outDir: client/src/app/models
