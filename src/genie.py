@@ -7,6 +7,9 @@ print("Welcome to Up-Zonk, a Code Generation!")
 
 config, meta_model = utils.get_params()
 
+# utils.pp_json(meta_model)
+# utils.pp_json(config)
+
 print('\nGenerated:\n')
 Genesis(config, meta_model).create()
 print()

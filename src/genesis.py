@@ -1,7 +1,7 @@
 
 import traceback
 import pystache
-import inflect
+
 import names
 import os.path
 from os import path
@@ -16,7 +16,6 @@ class Genesis:
         self.base_out_dir = config['zonk']
         self.base_models_dir = config['up']
         self.base_templates_dir = config['templates']
-        self.inflect = inflect.engine()
 
         model_filepath = path.join(
             self.base_models_dir, 'original', self.name + '.json')
@@ -34,11 +33,7 @@ class Genesis:
 
     def __build_files(self):
         files = self.meta_model['templates']['files']
-        # TODO: make excludes section optional, make files optional --
         excludes = self.meta_model['templates']['exclude']['files']
-
-        # TODO: makes excludes work --
-        # excludes = self.meta_model['templates']['exclude'] if 'exclude' in self.meta_model['templates'] else "dah"
 
         for file in files:
             filename = file['name']
@@ -48,7 +43,13 @@ class Genesis:
             template_filename = filename + '.mustache'
             template_filepath = path.join(
                 self.base_templates_dir, template_filename)
-            out_filename = filename + '.ts'
+
+            out_filename = self.name
+            if "outFileNamePlural" in file:
+                if file["outFileNamePlural"]:
+                    out_filename = names.plural(out_filename)
+
+            out_filename = out_filename + '.' + filename + '.ts'
 
             if "outFileName" in file:
                 out_filename = file["outFileName"].replace(
@@ -62,7 +63,6 @@ class Genesis:
         ng_components = self.meta_model['templates']['ngComponents']
         components_out_dir = self.meta_model['templates']['ngComponentsOutDir']
 
-        # TODO: make excludes section optional, make ngComponents optional --
         excludes = self.meta_model['templates']['exclude']['ngComponents']
 
         for component in ng_components:
@@ -84,15 +84,12 @@ class Genesis:
             out_dir = path.join(
                 self.base_out_dir, components_out_dir, component_name)
 
-            bak_name = self.model['name']
-            self.model['name'] = names.pascalcase(component_name)
             self.__build_template(html_template_filepath,
                                   out_dir, html_out_filepath)
             self.__build_template(scss_template_filepath,
                                   out_dir, scss_out_filepath)
             self.__build_template(ts_template_filepath,
                                   out_dir, ts_out_filepath)
-            self.model['name'] = bak_name
 
     def __build_template(self, template_filepath, out_dir, out_filename):
 
@@ -113,18 +110,36 @@ class Genesis:
         model_fields = len(model)
 
         for i, item in enumerate(model):
-            item["tsName"] = names.camelcase(item["COLUMN_NAME"])
+            field_name = item["COLUMN_NAME"]
+            item["tsName"] = names.camelcase(field_name)
+            item["camelName"] = names.camelcase(field_name)
+            item["capitalName"] = names.capitalcase(
+                names.spacecase(field_name))
+            item["itemTemplateExpr"] = "{{ item." + \
+                names.camelcase(field_name) + "}}"
+
             item['tsType'] = self.__mysql_to_ts_type(item["DATA_TYPE"])
             item['isPK'] = item['COLUMN_KEY'] == 'PRI'
             item['isRequired'] = item['IS_NULLABLE'] == 'NO'
+            item['controlType'] = self.__mysql_to_control_type(
+                item['CHARACTER_MAXIMUM_LENGTH'])
+            item['inputType'] = item['tsType']
+            item['maxLength'] = item["CHARACTER_MAXIMUM_LENGTH"]
+
+            item['isFirstField'] = i == 0
             item['isLastField'] = (model_fields-1) == i
 
         new_model = {
             "name": self.name,
             "kebabName": self.name,
+            "kebabNamePlural": names.plural(self.name),
             "pascalName": names.pascalcase(self.name),
+            "pascalNamePlural": names.pascalcase(names.plural(self.name)),
             "camelName": names.camelcase(self.name),
-            "pluralName": self.inflect.plural(model[0]['TABLE_NAME']),
+            "camelNamePlural": names.camelcase(names.plural(self.name)),
+            "capitalName": names.capitalcase(names.spacecase(self.name)),
+            "spaceName": names.spacecase(self.name),
+
             "table": model[0]['TABLE_NAME'],
             "fields": model
         }
@@ -142,3 +157,10 @@ class Genesis:
             "bit": "boolean"
         }
         return map_types[field_type]
+
+    def __mysql_to_control_type(self, max_length):
+        if max_length is None:
+            return 'input'
+
+        return 'input' if max_length < 121 else 'textbox'
+

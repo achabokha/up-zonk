@@ -4,6 +4,9 @@
 ##
 
 import re
+import inflect
+
+inflect_engine = inflect.engine()
 
 def lowercase(string):
     """Convert string into lower case.
@@ -65,6 +68,12 @@ def pascalcase(string):
     """
 
     return capitalcase(camelcase(string))
+
+def spacecase(string):
+    return string.replace('-', ' ').replace('_', ' ')
+
+def plural(string):
+    return inflect_engine.plural(string)
 
 
 def quickTest():
