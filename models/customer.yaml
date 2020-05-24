@@ -11,6 +11,10 @@ templates:
     files:
         - name: entity
           outDir: server/src/entities
+        
+        - name: controller
+          outDir: server/src/controllers
+          outFileName: "{name}-ctrl.ts"
 
         - name: model
           outDir: client/src/app/models

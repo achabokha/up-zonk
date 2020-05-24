@@ -1,0 +1,40 @@
+import { BodyParams, Controller, Get, Post, PathParams, Put, Delete } from "@tsed/common";
+import { {{pascalName}} } from "../entities/{{camelName}}.entity";
+import { DataService } from "../services/data-service";
+import { Authorize } from "../middlewares/authorize";
+import { AllowAnonymous } from "../middlewares/allow-anonymous";
+
+@Authorize(["admin"])
+@Controller("/{{camelNamePlural}}")
+export class {{pascalNamePlural}}Ctrl {
+    constructor(private db: DataService) {}
+
+    @AllowAnonymous()
+    @Get("/")
+    getList(): Promise<{{pascalName}}[]> {
+        return this.db.{{pascalNamePlural}}.find();
+    }
+
+    @AllowAnonymous()
+    @Get("/:id")
+    get(@PathParams("id") id: number) {
+        return this.db.{{pascalNamePlural}}.findOne(id);
+    }
+
+    @Post("/")
+    create(@BodyParams() {{pascalName}}: {{pascalName}}): Promise<{{pascalName}}> {
+        return this.db.{{pascalNamePlural}}.save({{pascalName}});
+    }
+
+    @Put("/:id")
+    async update(@BodyParams() {{pascalName}}: {{pascalName}}) {
+        let r = await this.db.{{pascalNamePlural}}.save({{pascalName}});
+        return r;
+    }
+
+    @Delete("/:id")
+    async delete(@PathParams("id") id: number) {
+        let bt = await this.db.{{pascalNamePlural}}.findOne(id);
+        await this.db.{{pascalNamePlural}}.remove(bt);
+    }
+}
