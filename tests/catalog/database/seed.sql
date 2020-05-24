@@ -46,6 +46,11 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
+
+INSERT INTO `catalog`.`customer`
+VALUES
+(1,114,'Australian Collectors, Co.','Ferguson','Peter','03 9520 4555','636 St Kilda Road','Level 3','Melbourne','Victoria','3004','Australia',1611,'117300.00')
+
 -- default user 
 
 CREATE USER 'catalog'@'localhost';

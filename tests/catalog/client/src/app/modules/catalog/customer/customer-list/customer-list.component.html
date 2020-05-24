@@ -5,29 +5,62 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef></th>
-        <!-- <td mat-cell *matCellDef="let element"></td> -->
         <td mat-cell *matCellDef="let element">
-            <mat-radio-button value=""></mat-radio-button>
+            <mat-radio-button value=" }}"></mat-radio-button>
         </td>
     </ng-container>
-
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">
-            <a [routerLink]="[element.name]" [queryParams]="{ id: element.id }" routerLinkActive="router-link-active"></a>
-        </td>
+    <ng-container matColumnDef="customerNumber">
+        <th mat-header-cell *matHeaderCellDef>customerNumber</th>
+        <td mat-cell *matCellDef="let customerNumber"></td>
     </ng-container>
-
-    <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef>Title</th>
-        <td mat-cell *matCellDef="let element"></td>
+    <ng-container matColumnDef="customerName">
+        <th mat-header-cell *matHeaderCellDef>customerName</th>
+        <td mat-cell *matCellDef="let customerName"></td>
     </ng-container>
-
-    <ng-container matColumnDef="desc">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element"></td>
+    <ng-container matColumnDef="contactLastName">
+        <th mat-header-cell *matHeaderCellDef>contactLastName</th>
+        <td mat-cell *matCellDef="let contactLastName"></td>
     </ng-container>
-
+    <ng-container matColumnDef="contactFirstName">
+        <th mat-header-cell *matHeaderCellDef>contactFirstName</th>
+        <td mat-cell *matCellDef="let contactFirstName"></td>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>phone</th>
+        <td mat-cell *matCellDef="let phone"></td>
+    </ng-container>
+    <ng-container matColumnDef="addressLine1">
+        <th mat-header-cell *matHeaderCellDef>addressLine1</th>
+        <td mat-cell *matCellDef="let addressLine1"></td>
+    </ng-container>
+    <ng-container matColumnDef="addressLine2">
+        <th mat-header-cell *matHeaderCellDef>addressLine2</th>
+        <td mat-cell *matCellDef="let addressLine2"></td>
+    </ng-container>
+    <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>city</th>
+        <td mat-cell *matCellDef="let city"></td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef>state</th>
+        <td mat-cell *matCellDef="let state"></td>
+    </ng-container>
+    <ng-container matColumnDef="postalCode">
+        <th mat-header-cell *matHeaderCellDef>postalCode</th>
+        <td mat-cell *matCellDef="let postalCode"></td>
+    </ng-container>
+    <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>country</th>
+        <td mat-cell *matCellDef="let country"></td>
+    </ng-container>
+    <ng-container matColumnDef="salesRepEmployeeNumber">
+        <th mat-header-cell *matHeaderCellDef>salesRepEmployeeNumber</th>
+        <td mat-cell *matCellDef="let salesRepEmployeeNumber"></td>
+    </ng-container>
+    <ng-container matColumnDef="creditLimit">
+        <th mat-header-cell *matHeaderCellDef>creditLimit</th>
+        <td mat-cell *matCellDef="let creditLimit"></td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>

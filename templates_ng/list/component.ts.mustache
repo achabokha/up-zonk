@@ -19,7 +19,7 @@ export class {{pascalName}}ListComponent implements OnInit {
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-    displayedColumns: string[] = ["id", "name", "title", "desc"];
+    displayedColumns: string[] = [{{#fields}}"{{tsName}}"{{^isLastField}}, {{/isLastField}}{{/fields}}];
 
     selectedItem;
 

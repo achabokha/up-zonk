@@ -3,33 +3,22 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="filter" />
 </mat-form-field>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
+{{#fields}}
+    {{#isPK}}
+    <ng-container matColumnDef="{{tsName}}">
         <th mat-header-cell *matHeaderCellDef></th>
-        <!-- <td mat-cell *matCellDef="let element">{{ element.id }}</td> -->
         <td mat-cell *matCellDef="let element">
-            <mat-radio-button value="{{ element.id }}"></mat-radio-button>
+            <mat-radio-button value="{{ element.{{tsName}} }}"></mat-radio-button>
         </td>
     </ng-container>
-
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">
-            <a [routerLink]="[element.name]" [queryParams]="{ id: element.id }" routerLinkActive="router-link-active">{{
-                element.name
-            }}</a>
-        </td>
+    {{/isPK}}
+    {{^isPK}}
+    <ng-container matColumnDef="{{tsName}}">
+        <th mat-header-cell *matHeaderCellDef>{{tsName}}</th>
+        <td mat-cell *matCellDef="let {{tsName}}">{{ element.desc }}</td>
     </ng-container>
-
-    <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef>Title</th>
-        <td mat-cell *matCellDef="let element">{{ element.title }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="desc">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{ element.desc }}</td>
-    </ng-container>
-
+    {{/isPK}}
+{{/fields}}
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
