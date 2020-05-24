@@ -1,0 +1,32 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { {{pascalName}} } from '@models/{{kebabName}}.interface';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class {{pascalNamePlural}}Service {
+    constructor(private httpClient: HttpClient) {}
+
+    getAll(): Observable<{{pascalName}}[]> {
+        return this.httpClient.get<{{pascalName}}[]>('rest/{{kebabNamePlural}}');
+    }
+
+    create(item: {{pascalName}}) {
+        return this.httpClient.post('rest/{{kebabNamePlural}}', item);
+    }
+
+    read(id): Observable<{{pascalName}}>  {
+        return this.httpClient.get<{{pascalName}}>('rest/{{kebabNamePlural}}/${id}');
+    }
+
+    update(id, item: {{pascalName}}) {
+        return this.httpClient.put('rest/{{kebabNamePlural}}/${id}', item);
+    }
+
+    delete(id) {
+        return this.httpClient.delete('rest/{{kebabNamePlural}}/${id}');
+    }
+}

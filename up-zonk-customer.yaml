@@ -3,7 +3,7 @@
 up: ./models
 
 # where to look for templates 
-templates: ./templates
+templates: ./templates_ng
 
 # output base folder 
 zonk: ./tests/catalog

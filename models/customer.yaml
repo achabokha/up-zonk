@@ -6,7 +6,7 @@ templates:
         - list
         - details
         - edit
-    ngComponentsOutDir: client/src/app/modules/catalog/
+    ngComponentsOutDir: client/src/app/modules/catalog/customer
 
     files:
         - name: entity
