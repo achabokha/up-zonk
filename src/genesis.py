@@ -1,12 +1,10 @@
-
 import traceback
-import pystache
-
-import names
-import os.path
-from os import path
-import utils
+import os.path as path
+import os
 import shutil
+import pystache
+import names
+import utils
 
 
 class Genesis:
@@ -33,7 +31,10 @@ class Genesis:
 
     def __build_files(self):
         files = self.meta_model['templates']['files']
-        excludes = self.meta_model['templates']['exclude']['files']
+        excludes = []
+        if 'exclude' in self.meta_model['templates']:
+            if 'files' in self.meta_model['templates']['exclude']:
+                excludes = self.meta_model['templates']['exclude']['files']
 
         for file in files:
             filename = file['name']
@@ -62,8 +63,11 @@ class Genesis:
     def __build_ng_components(self):
         ng_components = self.meta_model['templates']['ngComponents']
         components_out_dir = self.meta_model['templates']['ngComponentsOutDir']
-
-        excludes = self.meta_model['templates']['exclude']['ngComponents']
+        
+        excludes = []
+        if 'exclude' in self.meta_model['templates']:
+            if 'ngComponents' in self.meta_model['templates']['exclude']:
+                excludes = self.meta_model['templates']['exclude']['ngComponents']
 
         for component in ng_components:
             if excludes and component in excludes:
@@ -163,4 +167,3 @@ class Genesis:
             return 'input'
 
         return 'input' if max_length < 121 else 'textbox'
-

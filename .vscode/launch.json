@@ -43,7 +43,9 @@
             "request": "launch",
             "program": "./src/genie.py",
             "args": [
-                "order-item",
+                "customer",
+                "--config",
+                "up-zonk-customer.yaml"
             ],
             "console": "integratedTerminal"
         }

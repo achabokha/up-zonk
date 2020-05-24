@@ -28,6 +28,24 @@ VALUES (
 '4', NULL, 'micro-patterned-slim-fit-suit-in-stretch-virgin-wool', 'Micro-patterned slim-fit suit in stretch virgin wool', 'An advanced two-piece suit by BOSS Menswear, designed as part of the BOSS Travel Line with special details to allow for travel in style and comfort. Comprising flat-fronted pants and a jacket with notch lapels, this sharp ensemble features a micro pattern created in virgin wool blended with stretch for freedom of movement. A partial lining allows for easy layering while ensuring optimum breathability.', '895.00', NULL, NULL, 0
 );
 
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customerNumber` int(11) NOT NULL,
+  `customerName` varchar(50) NOT NULL,
+  `contactLastName` varchar(50) NOT NULL,
+  `contactFirstName` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `addressLine1` varchar(50) NOT NULL,
+  `addressLine2` varchar(50) DEFAULT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `postalCode` varchar(15) DEFAULT NULL,
+  `country` varchar(50) NOT NULL,
+  `salesRepEmployeeNumber` int(11) DEFAULT NULL,
+  `creditLimit` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
 -- default user 
 
 CREATE USER 'catalog'@'localhost';
