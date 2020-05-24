@@ -166,4 +166,4 @@ class Genesis:
         if max_length is None:
             return 'input'
 
-        return 'input' if max_length < 121 else 'textbox'
+        return 'input' if max_length <= 128 else 'textbox'
