@@ -43,6 +43,16 @@
             "request": "launch",
             "program": "./src/genie.py",
             "args": [
+                "order-item",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Run customer generator",
+            "type": "python",
+            "request": "launch",
+            "program": "./src/genie.py",
+            "args": [
                 "customer",
                 "--config",
                 "up-zonk-customer.yaml"
