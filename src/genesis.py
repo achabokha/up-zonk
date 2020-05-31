@@ -124,8 +124,8 @@ class Genesis:
                 names.camelcase(field_name) + "}}"
 
             item['tsType'] = self.__mysql_to_ts_type(item["DATA_TYPE"])
-            item['isAutoIncrement'] = item['COLUMN_KEY'] == 'PRI'
-            item['isPK'] = item['EXTRA'] == 'auto_increment'
+            item['isPK'] = item['COLUMN_KEY'] == 'PRI'
+            item['isAutoIncrement'] = item['EXTRA'] == 'auto_increment'
             item['isID'] = item['isPK'] or item['isAutoIncrement']
             item['isDisplay'] = False if item['isID'] else self.__is_field(
                 field_name)
