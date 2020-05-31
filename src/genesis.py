@@ -5,6 +5,7 @@ import shutil
 import pystache
 import names
 import utils
+import re
 
 
 class Genesis:
@@ -63,7 +64,7 @@ class Genesis:
     def __build_ng_components(self):
         ng_components = self.meta_model['templates']['ngComponents']
         components_out_dir = self.meta_model['templates']['ngComponentsOutDir']
-        
+
         excludes = []
         if 'exclude' in self.meta_model['templates']:
             if 'ngComponents' in self.meta_model['templates']['exclude']:
@@ -117,13 +118,18 @@ class Genesis:
             field_name = item["COLUMN_NAME"]
             item["tsName"] = names.camelcase(field_name)
             item["camelName"] = names.camelcase(field_name)
-            item["capitalName"] = names.capitalcase(
-                names.spacecase(field_name))
+            item["capitalName"] = self.__sanitize_name(names.capitalcase(
+                names.spacecase(field_name)))
             item["itemTemplateExpr"] = "{{ item." + \
                 names.camelcase(field_name) + "}}"
 
             item['tsType'] = self.__mysql_to_ts_type(item["DATA_TYPE"])
-            item['isPK'] = item['COLUMN_KEY'] == 'PRI'
+            item['isAutoIncrement'] = item['COLUMN_KEY'] == 'PRI'
+            item['isPK'] = item['EXTRA'] == 'auto_increment'
+            item['isID'] = item['isPK'] or item['isAutoIncrement']
+            item['isDisplay'] = False if item['isID'] else self.__is_field(
+                field_name)
+            item['isReadOnly'] = field_name == 'name'
             item['isRequired'] = item['IS_NULLABLE'] == 'NO'
             item['controlType'] = self.__mysql_to_control_type(
                 item['CHARACTER_MAXIMUM_LENGTH'])
@@ -167,3 +173,22 @@ class Genesis:
             return 'input'
 
         return 'input' if max_length <= 128 else 'textbox'
+
+    def __sanitize_name(self, string):
+        # TODO: need a better matching. Need a loop, exit with a first found.
+        words = {
+            'desc': 'description',
+            'expr': 'expression',
+            'seq': 'sequence',
+            'num': 'number',
+            'Num': 'Number of',
+        }
+        return re.sub(r'\w+', lambda x: words.get(x.group(), x.group()), string)
+
+    def __is_field(self, field_name):
+        no_fields = [
+            'created_date_time',
+            'updated_date_time',
+            'step_seq_num'
+        ]
+        return not field_name in no_fields
