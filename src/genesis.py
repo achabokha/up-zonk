@@ -120,8 +120,7 @@ class Genesis:
             item["camelName"] = names.camelcase(field_name)
             item["capitalName"] = self.__sanitize_name(names.capitalcase(
                 names.spacecase(field_name)))
-            item["itemTemplateExpr"] = "{{ item." + \
-                names.camelcase(field_name) + "}}"
+
 
             item['tsType'] = self.__mysql_to_ts_type(item["DATA_TYPE"])
             item['isPK'] = item['COLUMN_KEY'] == 'PRI'
@@ -129,12 +128,19 @@ class Genesis:
             item['isID'] = item['isPK'] or item['isAutoIncrement']
             item['isDisplay'] = False if item['isID'] else self.__is_field(
                 field_name)
-            item['isReadOnly'] = field_name == 'name'
             item['isRequired'] = item['IS_NULLABLE'] == 'NO'
-            item['controlType'] = self.__mysql_to_control_type(
-                item['CHARACTER_MAXIMUM_LENGTH'])
+            item['isReadOnly'] = self.__is_readonly(item)
+            item['isListLink'] = self.__is_list_link(item)
+            item['controlType'] = self.__mysql_to_control_type(item)
             item['inputType'] = item['tsType']
             item['maxLength'] = item["CHARACTER_MAXIMUM_LENGTH"]
+
+            if item['controlType'] == 'toggle':
+                item["itemTemplateExpr"] = "{{ item." + \
+                    names.camelcase(field_name) + " == '1'? 'yes' : 'no' }}"
+            else: 
+                item["itemTemplateExpr"] = "{{ item." + \
+                    names.camelcase(field_name) + "}}"
 
             item['isFirstField'] = i == 0
             item['isLastField'] = (model_fields-1) == i
@@ -168,7 +174,14 @@ class Genesis:
         }
         return map_types[field_type]
 
-    def __mysql_to_control_type(self, max_length):
+    def __mysql_to_control_type(self, item):
+        if item["DATA_TYPE"] == 'tinyint':
+            return 'toggle'
+        
+        if item["DATA_TYPE"] == 'text':
+            return 'textbox'
+
+        max_length = item['CHARACTER_MAXIMUM_LENGTH']
         if max_length is None:
             return 'input'
 
@@ -182,6 +195,7 @@ class Genesis:
             'seq': 'sequence',
             'num': 'number',
             'Num': 'Number of',
+            'ind': '',
         }
         return re.sub(r'\w+', lambda x: words.get(x.group(), x.group()), string)
 
@@ -192,3 +206,17 @@ class Genesis:
             'step_seq_num'
         ]
         return not field_name in no_fields
+    
+    def __is_readonly(self, item):
+        field_name = item["COLUMN_NAME"]
+        link_names = [
+            "name"
+        ]
+        return field_name in link_names
+
+    def __is_list_link(self, item):
+        field_name = item["COLUMN_NAME"]
+        link_names = [
+            "name"
+        ]
+        return field_name in link_names
