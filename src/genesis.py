@@ -132,6 +132,7 @@ class Genesis:
             item['isReadOnly'] = self.__is_readonly(item)
             item['isListLink'] = self.__is_list_link(item)
             item['controlType'] = self.__mysql_to_control_type(item)
+            item['isToggle'] = item['controlType'] == 'toggle'
             item['inputType'] = item['tsType']
             item['maxLength'] = item["CHARACTER_MAXIMUM_LENGTH"]
 
