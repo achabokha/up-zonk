@@ -133,6 +133,8 @@ class Genesis:
             item['isListLink'] = self.__is_list_link(item)
             item['controlType'] = self.__mysql_to_control_type(item)
             item['isToggle'] = item['controlType'] == 'toggle'
+            item['isInput'] = item['controlType'] == 'input'
+            item['isTextbox'] = item['controlType'] == 'textbox'
             item['inputType'] = item['tsType']
             item['maxLength'] = item["CHARACTER_MAXIMUM_LENGTH"]
 
@@ -171,6 +173,7 @@ class Genesis:
             "char": "string",
             "datetime": "string",
             "text": "string",
+            "longtext": "string",
             "bit": "boolean"
         }
         return map_types[field_type]
@@ -180,6 +183,9 @@ class Genesis:
             return 'toggle'
         
         if item["DATA_TYPE"] == 'text':
+            return 'textbox'
+
+        if item["DATA_TYPE"] == 'longtext':
             return 'textbox'
 
         max_length = item['CHARACTER_MAXIMUM_LENGTH']
