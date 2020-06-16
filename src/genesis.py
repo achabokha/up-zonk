@@ -167,6 +167,7 @@ class Genesis:
     def __mysql_to_ts_type(self, field_type):
         map_types = {
             "tinyint": "number",
+            "smallint": "number",
             "int": "number",
             "decimal": "number",
             "varchar": "string",
