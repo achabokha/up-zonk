@@ -180,7 +180,7 @@ class Genesis:
         return map_types[field_type]
 
     def __mysql_to_control_type(self, item):
-        if item["DATA_TYPE"] == 'tinyint':
+        if item["COLUMN_NAME"] == 'active_ind':
             return 'toggle'
         
         if item["DATA_TYPE"] == 'text':
