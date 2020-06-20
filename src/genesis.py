@@ -31,7 +31,11 @@ class Genesis:
         self.__build_ng_components()
 
     def __build_files(self):
-        files = self.meta_model['templates']['files']
+        if 'files' in self.meta_model['templates']:
+            files = self.meta_model['templates']['files']
+        else:
+            return
+    
         excludes = []
         if 'exclude' in self.meta_model['templates']:
             if 'files' in self.meta_model['templates']['exclude']:
@@ -62,7 +66,11 @@ class Genesis:
             self.__build_template(template_filepath, out_dir, out_filename)
 
     def __build_ng_components(self):
-        ng_components = self.meta_model['templates']['ngComponents']
+        if 'ngComponents' in self.meta_model['templates']:
+            ng_components = self.meta_model['templates']['ngComponents']
+        else:
+            return
+
         components_out_dir = self.meta_model['templates']['ngComponentsOutDir']
 
         excludes = []
