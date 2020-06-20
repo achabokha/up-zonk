@@ -170,6 +170,7 @@ class Genesis:
             "smallint": "number",
             "int": "number",
             "decimal": "number",
+            "double": "number",
             "varchar": "string",
             "char": "string",
             "datetime": "string",
