@@ -35,7 +35,7 @@ class Genesis:
             files = self.meta_model['templates']['files']
         else:
             return
-    
+
         excludes = []
         if 'exclude' in self.meta_model['templates']:
             if 'files' in self.meta_model['templates']['exclude']:
@@ -129,7 +129,6 @@ class Genesis:
             item["capitalName"] = self.__sanitize_name(names.capitalcase(
                 names.spacecase(field_name)))
 
-
             item['tsType'] = self.__mysql_to_ts_type(item["DATA_TYPE"])
             item['isPK'] = item['COLUMN_KEY'] == 'PRI'
             item['isAutoIncrement'] = item['EXTRA'] == 'auto_increment'
@@ -149,7 +148,7 @@ class Genesis:
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + " == '1'? 'yes' : 'no' }}"
-            else: 
+            else:
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + "}}"
 
@@ -168,8 +167,18 @@ class Genesis:
             "spaceName": names.spacecase(self.name),
 
             "table": model[0]['TABLE_NAME'],
+
+
+
             "fields": model
         }
+
+        if 'params' in self.meta_model:
+            params = self.meta_model['params']
+            new_model = {**new_model, **params}
+
+        # utils.pp_json(new_model)
+
         return new_model
 
     def __mysql_to_ts_type(self, field_type):
@@ -191,7 +200,7 @@ class Genesis:
     def __mysql_to_control_type(self, item):
         if item["COLUMN_NAME"] == 'active_ind':
             return 'toggle'
-        
+
         if item["DATA_TYPE"] == 'text':
             return 'textbox'
 
@@ -223,7 +232,7 @@ class Genesis:
             'step_seq_num'
         ]
         return not field_name in no_fields
-    
+
     def __is_readonly(self, item):
         field_name = item["COLUMN_NAME"]
         link_names = [
