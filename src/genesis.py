@@ -147,10 +147,10 @@ class Genesis:
 
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \
-                    names.camelcase(field_name) + " == '1'? 'yes' : 'no' }}"
+                    names.camelcase(field_name) + " == '1'? 'yes' : 'no'" + " }}"
             else:
                 item["itemTemplateExpr"] = "{{ item." + \
-                    names.camelcase(field_name) + "}}"
+                    names.camelcase(field_name) + " }}"
 
             item['isFirstField'] = i == 0
             item['isLastField'] = (model_fields-1) == i
