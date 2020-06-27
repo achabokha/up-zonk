@@ -65,6 +65,7 @@ class Genesis:
 
             self.__build_template(template_filepath, out_dir, out_filename)
 
+
     def __build_ng_components(self):
         if 'ngComponents' in self.meta_model['templates']:
             ng_components = self.meta_model['templates']['ngComponents']
@@ -82,27 +83,23 @@ class Genesis:
             if excludes and component in excludes:
                 continue
 
-            html_template_filepath = path.join(
-                self.base_templates_dir, component, 'component.html.mustache')
-            scss_template_filepath = path.join(
-                self.base_templates_dir, component, 'component.scss.mustache')
-            ts_template_filepath = path.join(
-                self.base_templates_dir, component, 'component.ts.mustache')
+            for file_name in os.listdir(path.join(self.base_templates_dir, component)):
 
-            component_name = self.name + '-' + component
-            html_out_filepath = component_name + '.component.html'
-            scss_out_filepath = component_name + '.component.scss'
-            ts_out_filepath = component_name + '.component.ts'
+                if file_name.startswith('--'):
+                    continue
 
-            out_dir = path.join(
-                self.base_out_dir, components_out_dir, component_name)
+                template_filepath = path.join(
+                    self.base_templates_dir, component, file_name)
 
-            self.__build_template(html_template_filepath,
-                                  out_dir, html_out_filepath)
-            self.__build_template(scss_template_filepath,
-                                  out_dir, scss_out_filepath)
-            self.__build_template(ts_template_filepath,
-                                  out_dir, ts_out_filepath)
+                out_filepath = self.name + '-' + component + \
+                    '.' + file_name.replace('.mustache', '')
+
+                component_name = self.name + '-' + component
+
+                out_dir = path.join(
+                    self.base_out_dir, components_out_dir, component_name)
+
+                self.__build_template(template_filepath, out_dir, out_filepath)
 
     def __build_template(self, template_filepath, out_dir, out_filename):
 
@@ -147,7 +144,8 @@ class Genesis:
 
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \
-                    names.camelcase(field_name) + " == '1'? 'yes' : 'no'" + " }}"
+                    names.camelcase(field_name) + \
+                    " == '1'? 'yes' : 'no'" + " }}"
             else:
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + " }}"
