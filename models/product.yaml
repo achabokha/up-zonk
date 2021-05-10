@@ -1,4 +1,5 @@
-name: "product"
+name: product
+modelType: open-api-r
 
 templates:
     ngComponents:
@@ -27,8 +28,3 @@ templates:
             # - edit
         files:
             # - entity
-
-            
-
-            
-            

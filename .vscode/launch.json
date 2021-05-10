@@ -58,6 +58,16 @@
                 "up-zonk-customer.yaml"
             ],
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Run product[yaml] generator",
+            "type": "python",
+            "request": "launch",
+            "program": "./src/genie.py",
+            "args": [
+                "product",
+            ],
+            "console": "integratedTerminal"
         }
     ]
 }

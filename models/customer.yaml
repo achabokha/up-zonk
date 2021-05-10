@@ -1,4 +1,5 @@
-name: "customer"
+name: customer
+modelType: mysql
 
 templates:
     ngComponents:
