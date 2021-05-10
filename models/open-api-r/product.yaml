@@ -1,2 +1,10 @@
-name: name
-type: string
+product:
+    type: object
+    properties:
+        productId:
+            type: number
+            description: an auto increment product id
+        name:
+            type: string
+        description:
+            type: string
