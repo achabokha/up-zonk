@@ -24,9 +24,9 @@ class OpenAPIr:
                 names.spacecase(field_name)))
 
             item['tsType'] = item['type']
-            item['isPK'] = False
-            item['isAutoIncrement'] = False
-            item['isID'] = False
+            item['isPK'] = field_name == 'id'
+            item['isAutoIncrement'] = field_name == 'id'
+            item['isID'] = field_name == 'id'
             item['isDisplay'] = False if item['isID'] else True
             item['isRequired'] = False
             item['isReadOnly'] = False
