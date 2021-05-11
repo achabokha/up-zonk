@@ -1,15 +1,15 @@
-import sys
-import traceback
+# import sys
+# import traceback
 import os.path as path
 import os
-import shutil
+# import re
+# import shutil
 import pystache
 import names
 import utils
-import re
 
 from parsers.MySQL import MySQL
-from parsers.openAPIr import openAPIr
+from parsers.OpenAPIr import OpenAPIr
 
 class Genesis:
     def __init__(self, config, meta_model):
@@ -33,7 +33,7 @@ class Genesis:
 
         parsers = {
             'mysql': MySQL(meta_model, original_model),
-            'open-api-r': openAPIr(meta_model, original_model)
+            'open-api-r': OpenAPIr(meta_model, original_model)
         }
 
         parser = parsers[meta_model['modelType']]

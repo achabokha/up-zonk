@@ -72,6 +72,9 @@ def pascalcase(string):
 def spacecase(string):
     return string.replace('-', ' ').replace('_', ' ')
 
+def underscorecase(string):
+    return string.replace('-', '_')
+
 def plural(string):
     return inflect_engine.plural(string)
 

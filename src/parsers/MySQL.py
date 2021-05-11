@@ -35,6 +35,7 @@ class MySQL:
             item['isTextbox'] = item['controlType'] == 'textbox'
             item['inputType'] = item['tsType']
             item['maxLength'] = item["CHARACTER_MAXIMUM_LENGTH"]
+            item['info'] = item['capitalName'] 
 
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \

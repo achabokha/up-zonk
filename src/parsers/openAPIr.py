@@ -1,8 +1,8 @@
 
-import names
 import re
+import names
 
-class openAPIr:
+class OpenAPIr:
     def __init__(self, meta_model, model):
         self.name = meta_model['name']
         self.meta_model = meta_model
@@ -37,6 +37,8 @@ class openAPIr:
             item['isTextbox'] = item['controlType'] == 'textbox'
             item['inputType'] = item['tsType']
             item['maxLength'] = None
+            item['info'] = item['description'] if 'description' in item.keys() else item['capitalName']
+            item['COLUMN_NAME'] = names.underscorecase(field_name)
 
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \
