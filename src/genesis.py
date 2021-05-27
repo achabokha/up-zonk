@@ -9,7 +9,7 @@ import names
 import utils
 
 from parsers.MySQL import MySQL
-from parsers.OpenAPIr import OpenAPIr
+from parsers.openAPIr import OpenAPIr
 
 class Genesis:
     def __init__(self, config, meta_model):

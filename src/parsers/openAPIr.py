@@ -31,7 +31,7 @@ class OpenAPIr:
             item['isRequired'] = False
             item['isReadOnly'] = False
             item['isListLink'] = False
-            item['controlType'] = False
+            item['controlType'] = self.__to_control_type(item)
             item['isToggle'] = item['controlType'] == 'toggle'
             item['isInput'] = item['controlType'] == 'input'
             item['isTextbox'] = item['controlType'] == 'textbox'
@@ -88,9 +88,10 @@ class OpenAPIr:
         return re.sub(r'\w+', lambda x: words.get(x.group(), x.group()), string)
     
     def __to_control_type(self, item):
-        controls: {
+        controls = {
             'number': 'input',
-            'string': 'input'
+            'string': 'input',
+            'boolean': 'toggle'
         }
 
         return controls[item['type']]
