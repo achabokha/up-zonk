@@ -74,7 +74,7 @@ class Genesis:
                 if file["outFileNamePlural"]:
                     out_filename = names.plural(out_filename)
 
-            out_filename = out_filename + '.' + filename + '.ts'
+            out_filename = out_filename + '.' + filename
 
             if "outFileName" in file:
                 out_filename = file["outFileName"].replace(
