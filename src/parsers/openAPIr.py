@@ -55,14 +55,16 @@ class OpenAPIr:
             "name": self.name,
             "kebabName": self.name,
             "kebabNamePlural": names.plural(self.name),
-            "pascalName": names.pascalcase(self.name),
+            "pascalNameO": names.pascalcase(self.name),
+            "pascalName": names.nospacescase(names.pascalcase(self.__sanitize_name(names.spacecase(self.name)))),
             "pascalNamePlural": names.pascalcase(names.plural(self.name)),
             "camelName": names.camelcase(self.name),
             "camelNamePlural": names.camelcase(names.plural(self.name)),
-            "capitalName": names.capitalcase(names.spacecase(self.name)),
+            "capitalName": self.__sanitize_name(names.capitalcase(names.spacecase(self.name))),
+            # "capitalName": names.capitalcase(names.spacecase(self.name)),
             "spaceName": names.spacecase(self.name),
 
-            "table": table_name,
+            "table": names.underscorecase(table_name),
 
             "fields": list(fields.values())
         }
@@ -78,6 +80,7 @@ class OpenAPIr:
     def __sanitize_name(self, string):
         # TODO: need a better matching. Need a loop, exit with a first found.
         words = {
+            'api': 'API',
             'desc': 'description',
             'expr': 'expression',
             'seq': 'sequence',

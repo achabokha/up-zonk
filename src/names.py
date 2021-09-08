@@ -75,6 +75,10 @@ def spacecase(string):
 def underscorecase(string):
     return string.replace('-', '_')
 
+def nospacescase(string):
+    return string.replace(' ', '')
+
+
 def plural(string):
     return inflect_engine.plural(string)
 
