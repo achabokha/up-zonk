@@ -24,13 +24,17 @@ class OpenAPIr:
                 names.spacecase(field_name)))
 
             item['tsType'] = item['type']
-            item['isPK'] = False
-            item['isAutoIncrement'] = False
-            item['isID'] = False
-            item['isDisplay'] = False if item['isID'] else True
+            item['format'] = 'format' in item
+            
+            item['isPK'] = field_name == "id"
+            item['isAutoIncrement'] = field_name == "id"
+            item['isID'] = field_name == "id"
+
+            item['isDisplay'] = False if item['isID'] else self.__is_field(
+                field_name)
             item['isRequired'] = False
             item['isReadOnly'] = False
-            item['isListLink'] = False
+            item['isListLink'] = field_name == "id"
             item['controlType'] = self.__to_control_type(item)
             item['isToggle'] = item['controlType'] == 'toggle'
             item['isInput'] = item['controlType'] == 'input'
@@ -98,4 +102,13 @@ class OpenAPIr:
         }
 
         return controls[item['type']]
+    
+    def __is_field(self, field_name):
+        no_fields = [
+            'created_date_time',
+            'updated_date_time',
+            'step_seq_num'
+        ]
+        return not field_name in no_fields
+
 
