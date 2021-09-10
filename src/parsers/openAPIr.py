@@ -2,6 +2,7 @@
 import re
 import names
 
+
 class OpenAPIr:
     def __init__(self, meta_model, model):
         self.name = meta_model['name']
@@ -24,8 +25,8 @@ class OpenAPIr:
                 names.spacecase(field_name)))
 
             item['tsType'] = item['type']
-            item['format'] = 'format' in item
-            
+            item['format'] = item.get('format')
+
             item['isPK'] = field_name == "id"
             item['isAutoIncrement'] = field_name == "id"
             item['isID'] = field_name == "id"
@@ -41,13 +42,24 @@ class OpenAPIr:
             item['isTextbox'] = item['controlType'] == 'textbox'
             item['inputType'] = item['tsType']
             item['maxLength'] = None
-            item['info'] = item['description'] if 'description' in item.keys() else item['capitalName']
+            item['info'] = item['description'] if 'description' in item.keys(
+            ) else item['capitalName']
             item['COLUMN_NAME'] = names.underscorecase(field_name)
+            item['COLUMN_TYPE'] = self.__type_to_mysql(
+                item["type"], item["format"])
 
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + \
                     " == '1'? 'yes' : 'no'" + " }}"
+            elif item["format"]:
+                map_1 = {
+                   "date": "{{ item." + names.camelcase(field_name) + " | df: \"date\" }}",
+                   "date-time": "{{ item." + names.camelcase(field_name) + " | df }}",
+                }
+                item["itemTemplateExpr"] = map_1[item["format"]]
+                item["cssClass"] = item["format"]
+
             else:
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + " }}"
@@ -93,7 +105,7 @@ class OpenAPIr:
             'ind': '',
         }
         return re.sub(r'\w+', lambda x: words.get(x.group(), x.group()), string)
-    
+
     def __to_control_type(self, item):
         controls = {
             'number': 'input',
@@ -102,7 +114,7 @@ class OpenAPIr:
         }
 
         return controls[item['type']]
-    
+
     def __is_field(self, field_name):
         no_fields = [
             'created_date_time',
@@ -111,4 +123,17 @@ class OpenAPIr:
         ]
         return not field_name in no_fields
 
+    def __type_to_mysql(self, i_type, i_format):
 
+        if i_format:
+            map_1 = {
+                "date": "date DEFAULT NULL",
+                "date-time": "datetime DEFAULT NULL",
+            }
+            return map_1[i_format]
+
+        map_2 = {
+            "number": "int DEFAULT NULL",
+            "string": "varchar(255) DEFAULT NULL",
+        }
+        return map_2[i_type]
