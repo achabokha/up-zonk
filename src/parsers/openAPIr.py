@@ -117,9 +117,9 @@ class OpenAPIr:
 
     def __is_field(self, field_name):
         no_fields = [
-            'created_date_time',
-            'updated_date_time',
-            'step_seq_num'
+            'created-date-time',
+            'updated-date-time',
+            'step-seq-num'
         ]
         return not field_name in no_fields
 
