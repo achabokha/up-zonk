@@ -14,6 +14,7 @@ class OpenAPIr:
         table_name = list(self.model.keys())[0]
 
         fields = self.model[table_name]['properties']
+        description = self.model[table_name]['description'] if 'description' in self.model[table_name].keys() else table_name
 
         model_fields = len(fields)
 
@@ -54,12 +55,14 @@ class OpenAPIr:
                     " == '1'? 'yes' : 'no'" + " }}"
             elif item["format"]:
                 map_1 = {
-                   "date": "{{ item." + names.camelcase(field_name) + " | df: \"date\" }}",
-                   "date-time": "{{ item." + names.camelcase(field_name) + " | df }}",
+                    "date": "{{ item." + names.camelcase(field_name) + " | df: \"date\" }}",
+                    "date-time": "{{ item." + names.camelcase(field_name) + " | df }}",
                 }
                 item["itemTemplateExpr"] = map_1[item["format"]]
                 item["cssClass"] = item["format"]
-
+            elif item["type"] == "number":
+                item["itemTemplateExpr"] = "{{ item." + \
+                    names.camelcase(field_name) + " | number }}"
             else:
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + " }}"
@@ -81,6 +84,7 @@ class OpenAPIr:
             "spaceName": names.spacecase(self.name),
 
             "table": names.underscorecase(table_name),
+            "title": description,
 
             "fields": list(fields.values())
         }
