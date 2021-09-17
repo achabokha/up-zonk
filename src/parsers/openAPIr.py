@@ -101,6 +101,7 @@ class OpenAPIr:
         # TODO: need a better matching. Need a loop, exit with a first found.
         words = {
             'api': 'API',
+            'cpu': "CPU",
             'desc': 'description',
             'expr': 'expression',
             'seq': 'sequence',
