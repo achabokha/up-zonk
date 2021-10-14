@@ -41,6 +41,8 @@ class OpenAPIr:
             item['isToggle'] = item['controlType'] == 'toggle'
             item['isInput'] = item['controlType'] == 'input'
             item['isTextbox'] = item['controlType'] == 'textbox'
+            item['isNumber'] = item['tsType'] == 'number'
+
             item['inputType'] = item['tsType']
             item['maxLength'] = None
             item['info'] = item['description'] if 'description' in item.keys(
@@ -138,7 +140,7 @@ class OpenAPIr:
             return map_1[i_format]
 
         map_2 = {
-            "number": "int DEFAULT NULL",
+            "number": "int DEFAULT 0",
             "string": "varchar(255) DEFAULT NULL",
         }
         return map_2[i_type]
