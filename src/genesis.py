@@ -6,10 +6,12 @@ import os
 # import shutil
 import pystache
 import names
+from parsers.athena import Athena
 import utils
 
 from parsers.MySQL import MySQL
-from parsers.OpenAPIr import OpenAPIr
+from parsers.openAPIr import OpenAPIr
+from parsers.athena import Athena
 
 class Genesis:
     def __init__(self, config, meta_model):
@@ -33,7 +35,8 @@ class Genesis:
 
         parsers = {
             'mysql': MySQL(meta_model, original_model),
-            'open-api-r': OpenAPIr(meta_model, original_model)
+            'open-api-r': OpenAPIr(meta_model, original_model),
+            'athena': Athena(meta_model, original_model)
         }
 
         parser = parsers[meta_model['modelType']]
@@ -74,7 +77,7 @@ class Genesis:
                 if file["outFileNamePlural"]:
                     out_filename = names.plural(out_filename)
 
-            out_filename = out_filename + '.' + filename + '.ts'
+            out_filename = out_filename + '.' + filename
 
             if "outFileName" in file:
                 out_filename = file["outFileName"].replace(

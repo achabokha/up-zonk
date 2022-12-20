@@ -3,7 +3,7 @@ import re
 import names
 
 
-class OpenAPIr:
+class Athena:
     def __init__(self, meta_model, model):
         self.name = meta_model['name']
         self.meta_model = meta_model
@@ -11,22 +11,21 @@ class OpenAPIr:
 
     def parse(self):
 
-        table_name = list(self.model.keys())[0]
+        table_name = self.name
+        fields = self.model
+        model_field_count = len(fields)
 
-        fields = self.model[table_name]['properties']
-        description = self.model[table_name]['description'] if 'description' in self.model[table_name].keys() else table_name
+        for i, item in enumerate(fields):
+            field_name = item["Name"]
 
-        model_fields = len(fields)
-
-        for i, field_name in enumerate(fields):
-            item = fields[field_name]
             item["tsName"] = names.camelcase(field_name)
             item["camelName"] = names.camelcase(field_name)
             item["capitalName"] = self.__sanitize_name(names.capitalcase(
                 names.spacecase(field_name)))
 
-            item['tsType'] = item['type']
-            item['format'] = item.get('format')
+            field_type = item['Type']
+            item['tsType'] = self.__to_ts_type(field_type)
+            # item['format'] = item.get('format')
 
             item['isPK'] = field_name == "id"
             item['isAutoIncrement'] = field_name == "id"
@@ -37,7 +36,9 @@ class OpenAPIr:
             item['isRequired'] = False
             item['isReadOnly'] = False
             item['isListLink'] = field_name == "id"
-            item['controlType'] = self.__to_control_type(item)
+
+            # type html control
+            item['controlType'] = self.__to_control_type(field_type)
             item['isToggle'] = item['controlType'] == 'toggle'
             item['isInput'] = item['controlType'] == 'input'
             item['isTextbox'] = item['controlType'] == 'textbox'
@@ -45,24 +46,15 @@ class OpenAPIr:
 
             item['inputType'] = item['tsType']
             item['maxLength'] = None
-            item['info'] = item['description'] if 'description' in item.keys(
-            ) else item['capitalName']
+            item['info'] = item['capitalName']
             item['COLUMN_NAME'] = names.underscorecase(field_name)
-            item['COLUMN_TYPE'] = self.__type_to_mysql(
-                item["type"], item["format"])
+            item['COLUMN_TYPE'] = self.__type_to_mysql(field_type)
 
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + \
                     " == '1'? 'yes' : 'no'" + " }}"
-            elif item["format"]:
-                map_1 = {
-                    "date": "{{ item." + names.camelcase(field_name) + " | df: \"date\" }}",
-                    "date-time": "{{ item." + names.camelcase(field_name) + " | df }}",
-                }
-                item["itemTemplateExpr"] = map_1[item["format"]]
-                item["cssClass"] = item["format"]
-            elif item["type"] == "number":
+            elif field_type == "number":
                 item["itemTemplateExpr"] = "{{ item." + \
                     names.camelcase(field_name) + " | number }}"
             else:
@@ -70,7 +62,7 @@ class OpenAPIr:
                     names.camelcase(field_name) + " }}"
 
             item['isFirstField'] = i == 0
-            item['isLastField'] = (model_fields-1) == i
+            item['isLastField'] = (model_field_count-1) == i
 
         new_model = {
             "name": self.name,
@@ -86,9 +78,9 @@ class OpenAPIr:
             "spaceName": names.spacecase(self.name),
 
             "table": names.underscorecase(table_name),
-            "title": description,
+            # "title": description,``
 
-            "fields": list(fields.values())
+            "fields": self.model
         }
 
         if 'params' in self.meta_model:
@@ -113,14 +105,20 @@ class OpenAPIr:
         }
         return re.sub(r'\w+', lambda x: words.get(x.group(), x.group()), string)
 
-    def __to_control_type(self, item):
+    def __to_ts_type(self, field_type):
+        map_types = {
+            "bigint": "number",
+            "varchar": "string",
+        }
+        return map_types[field_type]
+
+    def __to_control_type(self, field_type):
         controls = {
-            'number': 'input',
-            'string': 'input',
-            'boolean': 'toggle'
+            'varchar': 'input',
+            'bigint': 'input',
         }
 
-        return controls[item['type']]
+        return controls[field_type]
 
     def __is_field(self, field_name):
         no_fields = [
@@ -130,17 +128,10 @@ class OpenAPIr:
         ]
         return not field_name in no_fields
 
-    def __type_to_mysql(self, i_type, i_format):
+    def __type_to_mysql(self, i_type):
+        types = {
 
-        if i_format:
-            map_1 = {
-                "date": "date DEFAULT NULL",
-                "date-time": "datetime DEFAULT NULL",
-            }
-            return map_1[i_format]
-
-        map_2 = {
-            "number": "int DEFAULT 0",
-            "string": "varchar(255) DEFAULT NULL",
+            "bigint": "int DEFAULT 0",
+            "varchar": "varchar(255) DEFAULT NULL",
         }
-        return map_2[i_type]
+        return types[i_type]

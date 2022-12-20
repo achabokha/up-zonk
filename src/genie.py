@@ -10,7 +10,7 @@ config, meta_model = utils.get_params()
 # utils.pp_json(meta_model)
 # utils.pp_json(config)
 
-print('\nGenerated:\n')
+print('\nGenie-ing:\n')
 print(meta_model['name'], '\n')
 Genesis(config, meta_model).create()
 print()
