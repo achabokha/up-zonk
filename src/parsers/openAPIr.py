@@ -14,7 +14,8 @@ class OpenAPIr:
         table_name = list(self.model.keys())[0]
 
         fields = self.model[table_name]['properties']
-        description = self.model[table_name]['description'] if 'description' in self.model[table_name].keys() else table_name
+        description = self.model[table_name]['description'] if 'description' in self.model[table_name].keys(
+        ) else table_name
 
         model_fields = len(fields)
 
@@ -36,7 +37,7 @@ class OpenAPIr:
                 field_name)
             item['isRequired'] = False
             item['isReadOnly'] = False
-            item['isListLink'] = field_name == "id"
+            item['isListLink'] = self.__is_list_link(field_name)
             item['controlType'] = self.__to_control_type(item)
             item['isToggle'] = item['controlType'] == 'toggle'
             item['isInput'] = item['controlType'] == 'input'
@@ -144,3 +145,9 @@ class OpenAPIr:
             "string": "varchar(255) DEFAULT NULL",
         }
         return map_2[i_type]
+
+    def __is_list_link(self, field_name):
+        link_names = [
+            "name"
+        ]
+        return field_name in link_names
