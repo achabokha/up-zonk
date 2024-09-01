@@ -6,6 +6,8 @@ from os.path import join, basename, splitext
 
 
 def pp_json(json_thing, sort=True, indents=4):
+    """ Pretty print JSON string or object. """
+    """ Good for debugging. """
     if isinstance(json_thing, str):
         print(json.dumps(json.loads(json_thing), sort_keys=sort, indent=indents))
     else:
@@ -16,15 +18,16 @@ def load_json(file_name):
     with open(file_name, "r") as file_stream:
         return json.load(file_stream)
 
+
 def load_yaml(file_name):
     with open(file_name, "r") as file_stream:
         return yaml.load(file_stream, Loader=yaml.FullLoader)
 
-def get_params():
 
+def get_params():
     parser = argparse.ArgumentParser(description="Parameters")
     parser.add_argument("meta_model")
-    parser.add_argument("--config", default='./up-zonk.yaml', required=False)
+    parser.add_argument("--config", default='./config.yaml', required=False)
     args = parser.parse_args()
 
     config = load_yaml(args.config)
@@ -35,7 +38,7 @@ def get_params():
 
     meta_model_file_name = args.model if file_extension == "yaml" else filename + ".yaml"
 
-    meta_model_path = os.path.join(config["up"], meta_model_file_name)
+    meta_model_path = os.path.join(config["models"], meta_model_file_name)
     meta_model = load_yaml(meta_model_path)
 
     return config, meta_model

@@ -1,21 +1,23 @@
 
 import re
 import names
-
+import utils
 
 class OpenAPIr:
-    def __init__(self, meta_model, model):
+    def __init__(self, meta_model, model_filepath_base):
         self.name = meta_model['name']
         self.meta_model = meta_model
+        self.model_filepath_base = model_filepath_base
+       
+    def parse(self, model: object = None):     
+        if model is None:
+            model = utils.load_yaml(self.model_filepath_base + '.yaml')
+    
         self.model = model
+        model_name = list(self.model.keys())[0]
 
-    def parse(self):
-
-        table_name = list(self.model.keys())[0]
-
-        fields = self.model[table_name]['properties']
-        description = self.model[table_name]['description'] if 'description' in self.model[table_name].keys(
-        ) else table_name
+        fields = self.model[model_name]['properties']
+        description = self.model[model_name]['description'] if 'description' in self.model[model_name].keys() else model_name
 
         model_fields = len(fields)
 
@@ -23,8 +25,8 @@ class OpenAPIr:
             item = fields[field_name]
             item["tsName"] = names.camelcase(field_name)
             item["camelName"] = names.camelcase(field_name)
-            item["capitalName"] = self.__sanitize_name(names.capitalcase(
-                names.spacecase(field_name)))
+            item["capitalName"] = self.__sanitize_name(names.capitalcase(names.spacecase(field_name)))
+            item["titleCase"] = self.__sanitize_name((names.spacecase(field_name))).title()
 
             item['tsType'] = item['type']
             item['format'] = item.get('format')
@@ -33,10 +35,7 @@ class OpenAPIr:
             item['isAutoIncrement'] = field_name == "id"
             item['isID'] = field_name == "id"
 
-            item['isDisplay'] = False if item['isID'] else self.__is_field(
-                field_name)
-            item['isRequired'] = False
-            item['isReadOnly'] = False
+            item['isDisplay'] = False if item['isID'] else self.__is_field(field_name)
             item['isListLink'] = self.__is_list_link(field_name)
             item['controlType'] = self.__to_control_type(item)
             item['isToggle'] = item['controlType'] == 'toggle'
@@ -46,11 +45,9 @@ class OpenAPIr:
 
             item['inputType'] = item['tsType']
             item['maxLength'] = None
-            item['info'] = item['description'] if 'description' in item.keys(
-            ) else item['capitalName']
-            item['COLUMN_NAME'] = names.underscorecase(field_name)
-            item['COLUMN_TYPE'] = self.__type_to_mysql(
-                item["type"], item["format"])
+            item['info'] = item['description'] if 'description' in item.keys() else item['capitalName']
+            item['dbColumnName'] = names.underscorecase(field_name)
+            item['dbColumnType'] = self.__type_to_mysql(item["type"], item["format"])
 
             if item['controlType'] == 'toggle':
                 item["itemTemplateExpr"] = "{{ item." + \
@@ -83,11 +80,13 @@ class OpenAPIr:
             "camelName": names.camelcase(self.name),
             "camelNamePlural": names.camelcase(names.plural(self.name)),
             "capitalName": self.__sanitize_name(names.capitalcase(names.spacecase(self.name))),
-            # "capitalName": names.capitalcase(names.spacecase(self.name)),
+            "capitalNamePlural": self.__sanitize_name(names.capitalcase(names.spacecase(names.plural(self.name)))),
             "spaceName": names.spacecase(self.name),
 
-            "table": names.underscorecase(table_name),
+            "table": names.underscorecase(model_name),
             "title": description,
+            "titleCase": self.__sanitize_name((names.spacecase(self.name))).title(),
+            "titleCasePlural":  self.__sanitize_name((names.spacecase(names.plural(self.name)))).title(),
 
             "fields": list(fields.values())
         }
@@ -96,12 +95,13 @@ class OpenAPIr:
             params = self.meta_model['params']
             new_model = {**new_model, **params}
 
+        ## debug dump to console --
         # utils.pp_json(new_model)
 
         return new_model
 
     def __sanitize_name(self, string):
-        # TODO: need a better matching. Need a loop, exit with a first found.
+        # TODO: need a better matching. Need a loop, then exit with a first found.
         words = {
             'api': 'API',
             'cpu': "CPU",
@@ -127,7 +127,7 @@ class OpenAPIr:
         no_fields = [
             'created-date-time',
             'updated-date-time',
-            'step-seq-num'
+            'seq-num'
         ]
         return not field_name in no_fields
 

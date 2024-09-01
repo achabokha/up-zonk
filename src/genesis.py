@@ -1,55 +1,41 @@
-# import sys
-# import traceback
+
 import os.path as path
 import os
-# import re
-# import shutil
 import pystache
-import names
-from parsers.athena import Athena
-import utils
 
-from parsers.MySQL import MySQL
+import names
+
 from parsers.openAPIr import OpenAPIr
-from parsers.athena import Athena
+from parsers.csv import Csv
+
 
 class Genesis:
     def __init__(self, config, meta_model):
         self.name = meta_model['name']
         self.meta_model = meta_model
-        self.base_out_dir = config['zonk']
-        self.base_models_dir = config['up']
+        self.base_out_dir = config['output']
+        self.base_models_dir = config['models']
         self.base_templates_dir = config['templates']
 
-        model_filepath_base = path.join(
-            self.base_models_dir, self.meta_model['modelType'], self.name)
-
-        if(path.exists(model_filepath_base + '.json')):
-            original_model = utils.load_json(model_filepath_base + '.json')
-        elif path.exists(model_filepath_base + '.yaml'):
-            original_model = utils.load_yaml(model_filepath_base + '.yaml')
-        else: 
-            raise Exception(f'Json or Yaml model files are not found for model [{model_filepath_base}]')  
-        
-        print(f'Model [{model_filepath_base}] found!')
+        model_filepath_base = path.join(self.base_models_dir, self.meta_model['modelType'], self.name)
 
         parsers = {
-            'mysql': MySQL(meta_model, original_model),
-            'open-api-r': OpenAPIr(meta_model, original_model),
-            'athena': Athena(meta_model, original_model)
+            'open-api-r': OpenAPIr(meta_model, model_filepath_base),
+            'csv': Csv(meta_model, model_filepath_base),
+            ## TODO: add update parsers for below model types
+            # 'mysql': MySQL(meta_model, model_filepath_base),
+            # 'athena': Athena(meta_model, model_filepath_base)
         }
 
         parser = parsers[meta_model['modelType']]
         self.model = parser.parse()
 
-        # for debbugging --
+        # for debugging --
         # if(path.exists(self.base_out_dir)):
-        #     shutil.rmtree(self.base_out_dir,  ignore_errors=True)
+        #     shutil.rmtree(self.base_out_dir, ignore_errors=True)
 
     def create(self):
-
         self.__build_files()
-
         self.__build_ng_components()
 
     def __build_files(self):
@@ -101,6 +87,14 @@ class Genesis:
                 excludes = self.meta_model['templates']['exclude']['ngComponents']
 
         for component in ng_components:
+            # adding logic to split component name if there is a hypen in the name 
+            # and use the word after hypen as part of component name
+            cmpArr = component.split(" ")
+            if len(cmpArr) > 1:
+                component = cmpArr[0]
+                componentRename = cmpArr[1]
+            else:
+                componentRename = component
             if excludes and component in excludes:
                 continue
 
@@ -109,14 +103,16 @@ class Genesis:
                 if file_name.startswith('--'):
                     continue
 
+                
+                    
                 template_filepath = path.join(
                     self.base_templates_dir, component, file_name)
 
-                out_filepath = self.name + '-' + component + \
+                out_filepath = self.name + '-' + componentRename + \
                     '.' + file_name.replace('.mustache', '')
 
-                component_name = self.name + '-' + component
-
+                component_name = self.name + '-' + componentRename
+              
                 out_dir = path.join(
                     self.base_out_dir, components_out_dir, component_name)
 

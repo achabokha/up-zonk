@@ -1,0 +1,9 @@
+# where to look for models
+# originating models are in sub-folders of model types, such as 'open-api-r' 
+models: ./models
+
+# where to look for templates 
+templates: ./templates
+
+# output base folder 
+output: ../rnd-ui
