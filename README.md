@@ -43,6 +43,7 @@ Add pystache module (<https://github.com/defunkt/pystache>)
 Add inflect module
 
 ```bash
+pip install yaml
 pip install inflect
 pip install pystache
 pystache-test
