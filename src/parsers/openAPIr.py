@@ -38,7 +38,8 @@ class OpenAPIr:
 
             item['isDisplay'] = False if item['isID'] else self.__is_field(field_name)
             item['isListLink'] = self.__is_list_link(field_name)
-            item['controlType'] = self.__to_control_type(item)
+            if 'controlType' not in item:
+                item['controlType'] = self.__to_control_type(item)
             item['isToggle'] = item['controlType'] == 'toggle'
             item['isInput'] = item['controlType'] == 'input'
             item['isTextbox'] = item['controlType'] == 'textbox'

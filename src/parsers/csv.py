@@ -20,6 +20,7 @@ class Csv:
             if not pd.isna(val[2]): properties[val[0]]["required"] = val[2]
             if not pd.isna(val[3]): properties[val[0]]["format"] = val[3]
             if not pd.isna(val[4]): properties[val[0]]["description"] = val[4]
+            if not pd.isna(val[5]): properties[val[0]]["controlType"] = val[5]
         
         self.model = {
             self.name: {
