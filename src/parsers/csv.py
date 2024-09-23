@@ -17,8 +17,9 @@ class Csv:
         for val in df.values:
             properties[val[0]] = {}
             properties[val[0]]["type"] = val[1]
-            if not pd.isna(val[2]): properties[val[0]]["format"] = val[2]
-            if not pd.isna(val[3]): properties[val[0]]["description"] = val[3]
+            if not pd.isna(val[2]): properties[val[0]]["required"] = val[2]
+            if not pd.isna(val[3]): properties[val[0]]["format"] = val[3]
+            if not pd.isna(val[4]): properties[val[0]]["description"] = val[4]
         
         self.model = {
             self.name: {

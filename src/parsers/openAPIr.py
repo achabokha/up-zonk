@@ -29,6 +29,7 @@ class OpenAPIr:
             item["titleCase"] = self.__sanitize_name((names.spacecase(field_name))).title()
 
             item['tsType'] = item['type']
+            item['isRequired'] = item.get('required')
             item['format'] = item.get('format')
 
             item['isPK'] = field_name == "id"
