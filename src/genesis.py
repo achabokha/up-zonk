@@ -102,9 +102,7 @@ class Genesis:
 
                 if file_name.startswith('--'):
                     continue
-
-                
-                    
+          
                 template_filepath = path.join(
                     self.base_templates_dir, component, file_name)
 
