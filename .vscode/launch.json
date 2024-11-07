@@ -54,11 +54,11 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "Run report-api [yaml] generator",
+      "name": "Run Fusion Site generator",
       "type": "python",
       "request": "launch",
       "program": "./src/genie.py",
-      "args": ["report-api", "--config", "up-zonk-b-temp.yaml"],
+      "args": ["site", "--config", "up-zonk-b-temp.yaml"],
       "console": "integratedTerminal"
     }
   ]

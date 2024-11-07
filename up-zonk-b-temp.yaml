@@ -1,9 +1,9 @@
 # where to look for up-zonk models
-# original models are in sub-folders of model types, such as 'mysql' 
-up: ../b-temp/models
+# original models are in sub-folders of model types, such as 'cvs' 
+models: ../b-temp/models/fusion/cms
 
 # where to look for templates 
 templates: ../b-temp/templates
 
 # output base folder 
-zonk: ../b-temp/out
+output: ../b-temp/out
