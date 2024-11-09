@@ -144,6 +144,7 @@ class OpenAPIr:
 
         map_2 = {
             "number": "int DEFAULT 0",
+            "boolean": "tinyint DEFAULT 0",
             "string": "varchar(255) DEFAULT NULL",
         }
         return map_2[i_type]
