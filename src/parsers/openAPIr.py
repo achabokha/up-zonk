@@ -36,7 +36,7 @@ class OpenAPIr:
             item['isAutoIncrement'] = field_name == "id"
             item['isID'] = field_name == "id"
 
-            item['isDisplay'] = False if item['isID'] else self.__is_field(field_name)
+            item['isDisplay'] = False if item['isID'] or item['format'] == 'hidden' else self.__is_field(field_name)
             item['isListLink'] = self.__is_list_link(field_name)
             if 'controlType' not in item:
                 item['controlType'] = self.__to_control_type(item)
@@ -59,6 +59,7 @@ class OpenAPIr:
                 map_1 = {
                     "date": "{{ item." + names.camelcase(field_name) + " | df: \"date\" }}",
                     "date-time": "{{ item." + names.camelcase(field_name) + " | df }}",
+                    "hidden": "",
                 }
                 item["itemTemplateExpr"] = map_1[item["format"]]
                 item["cssClass"] = item["format"]
@@ -139,6 +140,7 @@ class OpenAPIr:
             map_1 = {
                 "date": "date DEFAULT NULL",
                 "date-time": "datetime DEFAULT NULL",
+                "hidden": "varchar(255) DEFAULT NULL",
             }
             return map_1[i_format]
 
