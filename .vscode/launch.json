@@ -58,7 +58,7 @@
       "type": "python",
       "request": "launch",
       "program": "./src/genie.py",
-      "args": ["site", "--config", "up-zonk-b-temp.yaml"],
+      "args": ["component", "--config", "up-zonk-b-temp.yaml"],
       "console": "integratedTerminal"
     }
   ]

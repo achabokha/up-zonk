@@ -46,6 +46,7 @@ class OpenAPIr:
             item['isDisplay'] = False if item['isID'] or item['controlType'] == 'hidden' else self.__is_field(field_name)
             item['isListLink'] = self.__is_list_link(field_name)
             
+  
             item['inputType'] = item['tsType']
             item['maxLength'] = None
             item['info'] = item['description'] if 'description' in item.keys() else item['capitalName']
@@ -96,10 +97,11 @@ class OpenAPIr:
 
         if 'params' in self.meta_model:
             params = self.meta_model['params']
+            new_model['hasParent'] = True if 'parentIdName' in params.keys() else False
             new_model = {**new_model, **params}
 
         ## debug dump to console --
-        # utils.pp_json(new_model)
+        utils.pp_json(new_model)
 
         return new_model
 
