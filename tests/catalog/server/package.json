@@ -25,7 +25,7 @@
     "dependencies": {
         "@tsed/ajv": "5.47.0",
         "@tsed/common": "5.47.0",
-        "@tsed/core": "5.47.0",
+        "@tsed/core": "5.65.7",
         "@tsed/di": "5.47.0",
         "@tsed/exceptions": "5.47.0",
         "@tsed/swagger": "5.47.0",
